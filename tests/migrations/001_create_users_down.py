@@ -4,13 +4,13 @@ import psycopg2
 import helper
 
 class TestCreateUsers_Down(unittest.TestCase):
-    def setUp():
+    def setUp(self):
         self.connection = helper.setup_connection()
 
-    def tearDown():
+    def tearDown(self):
         helper.teardown_connection(self.connection)
 
-    def test_users_does_not_exist():
+    def test_users_does_not_exist(self):
         self.assertTrue(False)
 
 if __name__ == '__main__':

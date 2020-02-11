@@ -7,7 +7,7 @@ scripts.
 
 Prerequesites:
 
-- python 3.7.5 or higher with python3.7-venv (or as appropriate)
+- python 3.7.5 or higher
 - docker
 
 Setup your python environment:
