@@ -34,7 +34,9 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82,E303,F401 --show-source --statistics
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Run migration tests
+      working-directory: ./tests
+      env:
+        DATABASE_PORT: ${{ job.services.postgres.ports['5432'] }}
       run: |
         cp ../settings.ini.sample ./settings.ini
         python test_migrations.py --confirm
-      working-directory: ./tests

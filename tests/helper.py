@@ -2,17 +2,22 @@
 """
 import configparser
 import psycopg2
+import os
 
 
 def load_settings():
     cfg = configparser.ConfigParser()
     cfg.read('settings.ini')
+    cfg = cfg['DEFAULT']
+    for nm in list(cfg.keys()):
+        if os.environ[nm]:
+            cfg[nm] = os.environ[nm]
     return cfg
 
 
 def setup_connection():
     """Create a psycopg2 connection to the postgres database"""
-    cfg = load_settings()['DEFAULT']
+    cfg = load_settings()
     return psycopg2.connect(
         host=cfg['DATABASE_HOST'],
         port=int(cfg['DATABASE_PORT']),
