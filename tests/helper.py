@@ -12,7 +12,7 @@ def load_settings():
 
 def setup_connection():
     """Create a psycopg2 connection to the postgres database"""
-    cfg = load_settings()
+    cfg = load_settings()['DEFAULT']
     return psycopg2.connect(
         host=cfg['DATABASE_HOST'],
         port=int(cfg['DATABASE_PORT']),
