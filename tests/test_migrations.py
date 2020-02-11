@@ -14,6 +14,7 @@ import importlib
 import sys
 import os
 import helper
+from pypika import Query, Table
 
 
 def main():

@@ -1,5 +1,5 @@
 import unittest
-import pypika
+from pypika import Query, Table, Parameter
 import psycopg2
 import helper
 

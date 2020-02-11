@@ -1,5 +1,4 @@
 import psycopg2
-from pypika import Query, Table
 
 
 def up(conn: psycopg2):
