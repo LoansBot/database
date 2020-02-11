@@ -15,6 +15,7 @@ import sys
 import os
 import helper
 from pypika import PostgreSQLQuery as Query, Table, Schema
+import unittest
 
 
 def main():
