@@ -24,7 +24,7 @@ class DownTest(unittest.TestCase):
         )
         result = self.cursor.fetchone()
         self.connection.commit()
-        self.assertNone(result)
+        self.assertIsNone(result)
 
 
 if __name__ == '__main__':

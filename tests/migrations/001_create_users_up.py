@@ -22,7 +22,7 @@ class UpTest(unittest.TestCase):
         )
         result = self.cursor.fetchone()
         self.connection.commit()
-        self.assertNotNone(result)
+        self.assertIsNotNone(result)
 
 
     def test_default_values(self):
@@ -42,13 +42,14 @@ class UpTest(unittest.TestCase):
         )
         row = self.cursor.fetchone()
         self.connection.rollback()
+        self.assertIsNotNone(row)
 
         uname, auth, pdig, cat, updat = row
         self.assertEqual(uname, 'test-user')
         self.assertEqual(auth, 0)
         self.assertNone(pdig)
-        self.assertNotNone(cat)
-        self.assertNotNone(updat)
+        self.assertIsNotNone(cat)
+        self.assertIsNotNone(updat)
 
 
 if __name__ == '__main__':

@@ -100,7 +100,7 @@ def main():
 
 def run_tests(runner, testcase):
     suite = unittest.defaultTestLoader.loadTestsFromTestCase(testcase)
-    runner.run(suite)
+    return runner.run(suite)
 
 
 def drop_all_tables(conn):
