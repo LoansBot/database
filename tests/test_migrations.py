@@ -116,7 +116,7 @@ def drop_all_tables(conn):
     )
     table_names = cursor.fetchall()
     for (tbl_name,) in table_names:
-        cursor.execute(f'DROP TABLE \'{tbl_name}\' CASCADE')
+        cursor.execute(f'DROP TABLE {tbl_name} CASCADE')
     conn.commit()
     cursor.close()
 
