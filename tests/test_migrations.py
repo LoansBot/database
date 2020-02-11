@@ -29,7 +29,7 @@ def main():
 
     print('Loading migrations...')
     sys.path.append('../src')
-    files = sorted(os.listdir('migrations')).
+    files = sorted(os.listdir('migrations'))
     files = [f[:-3] in files if f.endswith('.py')]
     print('Loading all the modules to verify...')
     for f in files:

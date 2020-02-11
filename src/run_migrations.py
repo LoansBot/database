@@ -12,7 +12,7 @@ MIGRATIONS_PATH = 'migrations.json'
 
 def main():
     migrs = _load_migrations()
-    files = sorted(os.listdir('migrations')).
+    files = sorted(os.listdir('migrations'))
     files = [f[:-3] in files if f.endswith('.py')]
 
     if files[:len(migrs)] != migrs:
