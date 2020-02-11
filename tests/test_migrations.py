@@ -106,7 +106,7 @@ def drop_all_tables(conn):
         Query.from_(info_schema)
         .where(info_schema.table_type == 'BASE TABLE')
         .where(info_schema.table_schema == 'public')
-        .select(info.table_name).get_sql()
+        .select(info_schema.table_name).get_sql()
     )
     table_names = cursor.fetchall()
     for (tbl_name,) in table_names:
