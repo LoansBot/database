@@ -31,7 +31,7 @@ class UpTest(unittest.TestCase):
     def test_default_values(self):
         users = Table('users')
         self.cursor.execute(
-            Query.into(users).columns('username').insert(Parameter('$1')).get_sql(),
+            Query.into(users).columns('username').insert(Parameter('%s')).get_sql(),
             ('test-user',)
         )
         self.cursor.execute('SELECT currval(pg_get_serial_sequence(\'users\', \'id\'))')
@@ -39,9 +39,9 @@ class UpTest(unittest.TestCase):
         self.cursor.execute(
             Query.from_(users)
             .select(users.username, users.auth, users.password_digest, users.created_at, users.updated_at)
-            .where(users.id == Parameter('$1'))
+            .where(users.id == Parameter('%s'))
             .limit(1).get_sql(),
-            user_id
+            (user_id,)
         )
         row = self.cursor.fetchone()
         self.connection.rollback()
