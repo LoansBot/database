@@ -50,7 +50,7 @@ class UpTest(unittest.TestCase):
         uname, auth, pdig, cat, updat = row
         self.assertEqual(uname, 'test-user')
         self.assertEqual(auth, 0)
-        self.assertNone(pdig)
+        self.assertIsNone(pdig)
         self.assertIsNotNone(cat)
         self.assertIsNotNone(updat)
 
