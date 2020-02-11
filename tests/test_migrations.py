@@ -12,6 +12,7 @@ import psycopg2
 import argparse
 import importlib
 import sys
+import os
 
 
 def main():
