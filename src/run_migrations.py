@@ -13,7 +13,7 @@ MIGRATIONS_PATH = 'migrations.json'
 def main():
     migrs = _load_migrations()
     files = sorted(os.listdir('migrations'))
-    files = [f[:-3] in files if f.endswith('.py')]
+    files = [f[:-3] for f in files if f.endswith('.py')]
 
     if files[:len(migrs)] != migrs:
         raise Exception('Existing migrations aren\'t just the beginning of expected migrations')
