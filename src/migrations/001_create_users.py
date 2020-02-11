@@ -15,12 +15,12 @@ CREATE TABLE users(
 )
         '''
     )
-    print(str(cursor.query))
+    print(cursor.query.decode('utf-8'))
     cursor.close()
 
 
 def down(conn: psycopg2):
     cursor = conn.cursor()
     cursor.execute('DROP TABLE users CASCADE')
-    print(str(cursor.query))
+    print(cursor.query.decode('utf-8'))
     cursor.close()
