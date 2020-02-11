@@ -1,6 +1,5 @@
 import unittest
 from pypika import PostgreSQLQuery as Query, Table, Schema, Parameter
-import psycopg2
 import helper
 
 class UpTest(unittest.TestCase):
