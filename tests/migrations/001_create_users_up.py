@@ -6,10 +6,13 @@ import helper
 class UpTest(unittest.TestCase):
     def setUp(self):
         self.connection = helper.setup_connection()
+        self.cursor = self.connection.cursor()
 
 
     def tearDown(self):
+        self.cursor.close()
         helper.teardown_connection(self.connection)
+
 
 
     def test_users_does_exist(self):
