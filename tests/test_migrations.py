@@ -38,15 +38,15 @@ def main():
         mod = importlib.import_module(f'migrations.{f}')
         if not hasattr(mod, 'up'):
             print(f'Module {mod} is missing the up function!')
-            os.exit(1)
+            sys.exit(1)
         down_test_mod = importlib.import_module(f'migrations.{f}_down')
         if not hasattr(down_test_mod, 'DownTest'):
             print(f'Module {mod} down test missing class DownTest')
-            os.exit(1)
+            sys.exit(1)
         up_test_mod = importlib.import_module(f'migrations.{f}_up')
         if not hasattr(up_test_mod, 'UpTest'):
             print(f'Module {mod} up test missing class UpTest')
-            os.exit(1)
+            sys.exit(1)
 
 
     conn = helper.setup_connection()
@@ -63,14 +63,14 @@ def main():
         print(f'Running down test for {f}')
         result = runner.run(down_test_mod.DownTest)
         if result.failures:
-            os.exit(1)
+            sys.exit(1)
         print(f'Applying migration {f}')
         mod.up(conn)
         conn.commit()
         print(f'Running up test for {f}')
         result = runner.run(up_test_mod.UpTest)
         if result.failures:
-            os.exit(1)
+            sys.exit(1)
         if hasattr(mod, 'down'):
             print(f'Rolling back migration {f}')
             mod.down(conn)
@@ -78,14 +78,14 @@ def main():
             print(f'Running down test for {f}')
             result = runner.run(down_test_mod.DownTest)
             if result.failures:
-                os.exit(1)
+                sys.exit(1)
             print(f'Reapplying migration {f}')
             mod.up(conn)
             conn.commit()
             print(f'Running up test for {f}')
             result = runner.run(up_test_mod.UpTest)
             if result.failures:
-                os.exit(1)
+                sys.exit(1)
 
     print()
     print('All migrations completed successfully!')
