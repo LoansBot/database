@@ -1,5 +1,5 @@
 import unittest
-from pypika import Query, Table
+from pypika import PostgreSQLQuery as Query, Schema
 import psycopg2
 import helper
 
@@ -15,7 +15,7 @@ class DownTest(unittest.TestCase):
 
 
     def test_users_does_not_exist(self):
-        info_schema = Table('information_schema.tables')
+        info_schema = Schema('information_schema').tables
         self.cursor.execute(
             Query.from_(info_schema)
             .where(info_schema.table_type == 'BASE TABLE')

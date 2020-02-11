@@ -14,7 +14,7 @@ import importlib
 import sys
 import os
 import helper
-from pypika import Query, Table
+from pypika import PostgreSQLQuery as Query, Table, Schema
 
 
 def main():
@@ -100,7 +100,7 @@ def main():
 def drop_all_tables(conn):
     """Drop all the tables in the default database"""
     cursor = conn.cursor()
-    info_schema = Table('information_schema.tables')
+    info_schema = Schema('information_schema').tables
 
     cursor.execute(
         Query.from_(info_schema)
