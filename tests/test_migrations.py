@@ -63,14 +63,14 @@ def main():
         down_test_mod = importlib.import_module(f'migrations.{f}_down')
 
         print(f'Running down test for {f}')
-        result = run_tests(runner, down_test_mod.DownTest())
+        result = run_tests(runner, down_test_mod.DownTest)
         if result.failures:
             sys.exit(1)
         print(f'Applying migration {f}')
         mod.up(conn)
         conn.commit()
         print(f'Running up test for {f}')
-        result = run_tests(runner, up_test_mod.UpTest())
+        result = run_tests(runner, up_test_mod.UpTest)
         if result.failures:
             sys.exit(1)
         if hasattr(mod, 'down'):
@@ -78,14 +78,14 @@ def main():
             mod.down(conn)
             conn.commit()
             print(f'Running down test for {f}')
-            result = run_tests(runner, down_test_mod.DownTest())
+            result = run_tests(runner, down_test_mod.DownTest)
             if result.failures:
                 sys.exit(1)
             print(f'Reapplying migration {f}')
             mod.up(conn)
             conn.commit()
             print(f'Running up test for {f}')
-            result = run_tests(runner, up_test_mod.UpTest())
+            result = run_tests(runner, up_test_mod.UpTest)
             if result.failures:
                 sys.exit(1)
 
