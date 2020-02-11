@@ -36,5 +36,5 @@ jobs:
     - name: Run migration tests
       run: |
         cp ../settings.ini.sample ./settings.ini
-        python test_migrations.py
+        python test_migrations.py --confirm
       working-directory: ./tests
