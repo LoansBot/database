@@ -45,7 +45,7 @@ alphabetical ascending ordering of the filenames. If a migration filename
 
 ## Auto-generated Files
 
-This script stores the current database migrations in `~/migrations.json`.
+This script stores the current database migrations in `migrations.json`.
 In order to run migrations, there must only be newer migrations (i.e.,
 this will fail before doing anything if a migration was skipped).
 
