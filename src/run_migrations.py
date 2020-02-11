@@ -74,7 +74,7 @@ def load_settings():
     cfg.read('settings.ini')
     cfg = cfg['DEFAULT']
     for nm in list(cfg.keys()):
-        if os.environ[nm]:
+        if os.environ.get(nm):
             cfg[nm] = os.environ[nm]
     return cfg
 
