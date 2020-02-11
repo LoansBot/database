@@ -13,6 +13,7 @@ import argparse
 import importlib
 import sys
 import os
+import helper
 
 
 def main():
@@ -48,7 +49,7 @@ def main():
             os.exit(1)
 
 
-    conn = setup_connection()
+    conn = helper.setup_connection()
     print('Dropping all tables...')
     drop_all_tables(conn)
     print('Success!')
@@ -97,7 +98,6 @@ def main():
 
 def drop_all_tables(conn):
     """Drop all the tables in the default database"""
-    cfg = load_settings()
     cursor = conn.cursor()
     info_schema = Table('information_schema.tables')
 
@@ -112,24 +112,6 @@ def drop_all_tables(conn):
         self.cursor.execute(f'DROP TABLE \'{tbl_name}\' CASCADE')
     conn.commit()
     cursor.close()
-
-
-def setup_connection():
-    """Create a psycopg2 connection to the postgres database"""
-    cfg = load_settings()
-    return psycopg2.connect(
-        host=cfg['DATABASE_HOST'],
-        port=int(cfg['DATABASE_PORT']),
-        user=cfg['DATABASE_USER'],
-        password=cfg['DATABASE_PASSWORD'],
-        dbname=cfg['DATABASE_DBNAME']
-    )
-
-
-def load_settings():
-    cfg = configparser.ConfigParser()
-    cfg.read('settings.ini')
-    return cfg
 
 
 if __name__ == '__main__':
