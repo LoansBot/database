@@ -102,15 +102,15 @@ def drop_all_tables(conn):
     cursor = conn.cursor()
     info_schema = Table('information_schema.tables')
 
-    self.cursor.execute(
+    cursor.execute(
         Query.from_(info_schema)
         .where(info_schema.table_type == 'BASE TABLE')
         .where(info_schema.table_schema == 'public')
         .select(info.table_name).get_sql()
     )
-    table_names = self.cursor.fetchall()
+    table_names = cursor.fetchall()
     for (tbl_name,) in table_names:
-        self.cursor.execute(f'DROP TABLE \'{tbl_name}\' CASCADE')
+        cursor.execute(f'DROP TABLE \'{tbl_name}\' CASCADE')
     conn.commit()
     cursor.close()
 
