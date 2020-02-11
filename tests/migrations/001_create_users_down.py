@@ -1,6 +1,5 @@
 import unittest
 from pypika import PostgreSQLQuery as Query, Schema
-import psycopg2
 import helper
 
 class DownTest(unittest.TestCase):
@@ -8,11 +7,9 @@ class DownTest(unittest.TestCase):
         self.connection = helper.setup_connection()
         self.cursor = self.connection.cursor()
 
-
     def tearDown(self):
         self.cursor.close()
         helper.teardown_connection(self.connection)
-
 
     def test_users_does_not_exist(self):
         info_schema = Schema('information_schema').tables

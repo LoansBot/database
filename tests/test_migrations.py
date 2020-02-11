@@ -7,14 +7,12 @@ next migration. At the end the database is cleared again.
 For safety, either the argument --confirm needs to be passed or user
 confirmation is required
 """
-import configparser
-import psycopg2
 import argparse
 import importlib
 import sys
 import os
 import helper
-from pypika import PostgreSQLQuery as Query, Table, Schema
+from pypika import PostgreSQLQuery as Query, Schema
 import unittest
 
 
@@ -49,7 +47,6 @@ def main():
         if not hasattr(up_test_mod, 'UpTest'):
             print(f'Module {mod} up test missing class UpTest')
             sys.exit(1)
-
 
     conn = helper.setup_connection()
     print('Dropping all tables...')

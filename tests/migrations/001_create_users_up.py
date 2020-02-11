@@ -8,12 +8,9 @@ class UpTest(unittest.TestCase):
         self.connection = helper.setup_connection()
         self.cursor = self.connection.cursor()
 
-
     def tearDown(self):
         self.cursor.close()
         helper.teardown_connection(self.connection)
-
-
 
     def test_users_does_exist(self):
         info_schema = Schema('information_schema').tables
@@ -26,7 +23,6 @@ class UpTest(unittest.TestCase):
         result = self.cursor.fetchone()
         self.connection.commit()
         self.assertIsNotNone(result)
-
 
     def test_default_values(self):
         users = Table('users')
