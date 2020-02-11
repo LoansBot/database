@@ -39,4 +39,4 @@ jobs:
       run: |
         cp ../settings.ini.sample ./settings.ini
         python test_migrations.py
-      working-directory: ./test
+      working-directory: ./tests
