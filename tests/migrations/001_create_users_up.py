@@ -32,7 +32,7 @@ class UpTest(unittest.TestCase):
         users = Table('users')
         self.cursor.execute(
             Query.into(users).columns('username').insert(Parameter('$1')).get_sql(),
-            'test-user'
+            ('test-user',)
         )
         self.cursor.execute('SELECT currval(pg_get_serial_sequence(\'users\', \'id\'))')
         user_id = self.cursor.fetchone()
