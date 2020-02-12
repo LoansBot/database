@@ -5,6 +5,7 @@ import os
 import importlib
 import configparser
 import psycopg2
+import settings
 
 
 MIGRATIONS_PATH = 'migrations.json'
@@ -59,7 +60,7 @@ def _load_migrations():
 
 def setup_connection():
     """Create a psycopg2 connection to the postgres database"""
-    cfg = load_settings()
+    cfg = settings.load_settings()
     return psycopg2.connect(
         host=cfg['DATABASE_HOST'],
         port=int(cfg['DATABASE_PORT']),
@@ -67,16 +68,6 @@ def setup_connection():
         password=cfg['DATABASE_PASSWORD'],
         dbname=cfg['DATABASE_DBNAME']
     )
-
-
-def load_settings():
-    cfg = configparser.ConfigParser()
-    cfg.read('settings.ini')
-    cfg = cfg['DEFAULT']
-    for nm in list(cfg.keys()):
-        if os.environ.get(nm):
-            cfg[nm] = os.environ[nm]
-    return cfg
 
 
 if __name__ == '__main__':

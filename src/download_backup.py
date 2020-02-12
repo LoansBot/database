@@ -9,6 +9,7 @@ import aws_utils
 import os
 import argparse
 import json
+import settings
 
 
 def main(args=None):
@@ -16,11 +17,12 @@ def main(args=None):
     parser.add_argument('--meta', help='The meta file describing what to download')
     args = parser.parse_args(args=args)
 
-    s3 = aws_utils.connect_to_s3()
+    cfg = settings.load_settings()
+    s3 = aws_utils.connect_to_s3(cfg)
 
     if args.meta is None:
         print('Finding the most recent backup...')
-        key = get_most_recent(s3)
+        key = get_most_recent(s3, cfg)
     else:
         print('Loading the meta file...')
         with open(args.meta, 'r') as infile:
@@ -29,7 +31,7 @@ def main(args=None):
 
     local_name = key.split('/')[-1]
     print(f'Downloading {key} to {local_name}')
-    s3.download_file(os.environ('AWS_S3_BUCKET'), key, local_name)
+    s3.download_file(cfg['AWS_S3_BUCKET'], key, local_name)
     print('Done!')
     if os.path.exists('downloaded.dump'):
         print('Deleting downloaded.dump')
@@ -44,11 +46,11 @@ def main(args=None):
         json.dump({'key': key}, outfile)
 
 
-def get_most_recent(s3):
+def get_most_recent(s3, cfg):
     # https://stackoverflow.com/a/45377836
     objs = s3.list_objects_v2(
-        Bucket=os.environ('AWS_S3_BUCKET'),
-        Prefix=os.environ('AWS_S3_FOLDER')
+        Bucket=cfg['AWS_S3_BUCKET'],
+        Prefix=cfg['AWS_S3_FOLDER']
     )
     get_last_modified = lambda obj: int(obj['LastModified'].strftime('%s'))
     last_added = [obj['Key'] for obj in sorted(objs, key=get_last_modified)][0]

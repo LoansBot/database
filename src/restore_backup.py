@@ -4,6 +4,7 @@
 import argparse
 import os
 import sys
+import settings
 
 
 def main(args=None):
@@ -33,11 +34,12 @@ def main(args=None):
 
 def restore_database(local_file):
     """Backs up the database to the given local file"""
-    db_host = os.environ('DATABASE_HOST')
-    db_port = int(os.environ('DATABASE_PORT'))
-    db_user = os.environ('DATABASE_USER')
-    db_pass = os.environ('DATABASE_PASSWORD')
-    db_name = os.environ('DATABASE_DBNAME')
+    cfg = settings.load_settings()
+    db_host = cfg['DATABASE_HOST']
+    db_port = int(cfg['DATABASE_PORT'])
+    db_user = cfg['DATABASE_USER']
+    db_pass = cfg['DATABASE_PASSWORD']
+    db_name = cfg['DATABASE_DBNAME']
 
     print(f'Initiating restore from {local_file}')
     old_pg_pass = os.environ.get('PGPASSWORD')

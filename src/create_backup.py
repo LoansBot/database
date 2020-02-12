@@ -6,13 +6,15 @@ import os
 import time
 import aws_utils
 import json
+import settings
 
 
 def main(args=None):
+    cfg = settings.load_settings()
     localf = f'{time.time()}.dump'
-    key = os.path.join(os.environ('AWS_S3_FOLDER'), localf)
+    key = os.path.join(cfg['AWS_S3_FOLDER'], localf)
     backup_database(localf)
-    upload_to_aws(localf, os.environ('AWS_S3_BUCKET'), key)
+    upload_to_aws(localf, cfg['AWS_S3_BUCKET'], key, cfg)
     if os.path.exists('uploaded.dump'):
         print('Deleting uploaded.dump')
         os.remove('uploaded.dump')
@@ -28,11 +30,12 @@ def main(args=None):
 
 def backup_database(local_file):
     """Backs up the database to the given local file"""
-    db_host = os.environ('DATABASE_HOST')
-    db_port = int(os.environ('DATABASE_PORT'))
-    db_user = os.environ('DATABASE_USER')
-    db_pass = os.environ('DATABASE_PASSWORD')
-    db_name = os.environ('DATABASE_DBNAME')
+    cfg = settings.load_settings()
+    db_host = cfg['DATABASE_HOST']
+    db_port = int(cfg['DATABASE_PORT'])
+    db_user = cfg['DATABASE_USER']
+    db_pass = cfg['DATABASE_PASSWORD']
+    db_name = cfg['DATABASE_DBNAME']
 
     print(f'Initiating database backup to {local_file}')
     old_pg_pass = os.environ.get('PGPASSWORD')
@@ -42,9 +45,9 @@ def backup_database(local_file):
     print('Backup finished')
 
 
-def upload_to_aws(local_file, bucket, s3_file):
+def upload_to_aws(local_file, bucket, s3_file, cfg):
     """Upload the local file to the given bucket with the given name."""
-    s3 = aws_utils.connect_to_s3()
+    s3 = aws_utils.connect_to_s3(cfg)
     print(f'Starting upload {local_file} -> {s3_file}')
     s3.upload_file(local_file, bucket, s3_file)
     print(f'Upload {local_file} -> {s3_file} successful')
