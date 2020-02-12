@@ -24,7 +24,7 @@ def main(migrations_dir='migrations'):
         print(f'Running migration migrations.{file_}')
         module = importlib.import_module(f'migrations.{file_}')
         try:
-            module.up()
+            module.up(conn)
             print('Success! Committing..')
             conn.commit()
             print('Success! Saving migration as complete..')
