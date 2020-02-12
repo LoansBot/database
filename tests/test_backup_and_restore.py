@@ -1,10 +1,9 @@
 """Test backup and restore logic"""
-import os
 import secrets
 import helper
 import sys
 import filecmp
-from pypika import PostgreSQLQuery as Query, Table
+from pypika import PostgreSQLQuery as Query, Table, Parameter
 
 
 def main():
@@ -20,7 +19,7 @@ def main():
 
     conn = helper.setup_connection()
     cursor = conn.cursor()
-    tbl = Table('users')
+    users = Table('users')
     cursor.execute(
         Query.into(users).columns('username').insert(Parameter('%s')).get_sql(),
         (name,)

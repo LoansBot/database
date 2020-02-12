@@ -1,5 +1,6 @@
 """Utility functions around aws"""
 import boto3
+import os
 
 
 def connect_to_s3():

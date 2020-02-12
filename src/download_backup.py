@@ -27,6 +27,7 @@ def main(args=None):
             meta = json.load(infile)
         key = meta['key']
 
+    local_name = key.split('/')[-1]
     print(f'Downloading {key} to {local_name}')
     s3.download_file(os.environ('AWS_S3_BUCKET'), key, local_name)
     print('Done!')
