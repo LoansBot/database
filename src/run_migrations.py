@@ -10,9 +10,9 @@ import psycopg2
 MIGRATIONS_PATH = 'migrations.json'
 
 
-def main():
+def main(migrations_dir='migrations'):
     migrs = _load_migrations()
-    files = sorted(os.listdir('migrations'))
+    files = sorted(os.listdir(migrations_dir))
     files = [f[:-3] for f in files if f.endswith('.py')]
 
     if files[:len(migrs)] != migrs:

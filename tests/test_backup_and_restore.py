@@ -12,7 +12,7 @@ def main():
     # Run migrations
     sys.path.append('../src')
     import run_migrations
-    run_migrations.main()
+    run_migrations.main(migrations_dir='../src/migrations')
 
     name = secrets.token_urlsafe(8)
     print(f'Creating test user {name}')
