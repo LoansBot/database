@@ -63,15 +63,17 @@ Migrations are expected to be tested, and this is facilitated via GitHub
 actions. There are two types of tests, one of which doesn't need per-migration
 logic and one of which does.
 
-- It should always be possible, without errors, to run scripts/init.sh,
-  then run scripts/migrate.sh and get no errors. Similarly, we should be
-  able to run scripts/rollback.sh until we reach an irreversible migration
-  or the beginning of time.
+- Migrations should not raise errors on fresh installs
+  - Run src/run_migrations.py and get no errors.
 - Each individual migration should have some basic up/down tests - i.e.,
   if the migration creates a table then the up test should check it doesn't
   exist and the down test should check it does and has the expected columns.
   The test for before the migration is applied should fail after the migration
   is applied, and the test after the migration is applied should fail before
   the migration is applied.
+- We should be able to backup the database
+  - Create backup and upload it to S3 using src/create_backup.py
+  - Download the last uploaded backup using src/download_backup.py
+  - Restore the downloaded backup using src/restore_from_backup.py
 
 Pull requests to the master branch will be rejected until tests pass.
