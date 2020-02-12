@@ -37,11 +37,21 @@ jobs:
       run: |
         flake8 . --count --select=E9,F63,F7,F82,E303,F401 --show-source --statistics
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Prepare test settings
+      working-directory: ./tests
+      run: |
+        cp ../settings.ini.sample ./settings.ini
     - name: Run migration tests
       working-directory: ./tests
       env:
         DATABASE_HOST: postgres
         DATABASE_PORT: ${{ job.services.postgres.ports['5432'] }}
       run: |
-        cp ../settings.ini.sample ./settings.ini
         python test_migrations.py --confirm
+    - name: Run backup and restore tests
+      working-directory: ./tests
+      env:
+        DATABASE_HOST: postgres
+        DATABASE_PORT: ${{ job.services.postgres.ports['5432'] }}
+      run: |
+        python test_backup_and_restore.py --confirm

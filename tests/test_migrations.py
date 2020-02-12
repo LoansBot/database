@@ -7,7 +7,6 @@ next migration. At the end the database is cleared again.
 For safety, either the argument --confirm needs to be passed or user
 confirmation is required
 """
-import argparse
 import importlib
 import sys
 import os
@@ -17,17 +16,7 @@ import unittest
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Run migration tests')
-    parser.add_argument('--confirm', action='store_true',
-                        help='Skip user confirmation requirement.')
-    args = parser.parse_args()
-    if not args.confirm:
-        print('You are performing a DANGEROUS operation!')
-        print('This will DELETE the entire database! Are you sure? [y/N]')
-        res = input()
-        if res != 'y' and res != 'Y':
-            print('Cancelling')
-            return
+    helper.require_confirm_or_user_input('Run migration tests')
 
     print('Loading migrations...')
     sys.path.append('../src')

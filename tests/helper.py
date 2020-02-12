@@ -3,6 +3,23 @@
 import configparser
 import psycopg2
 import os
+import argparse
+
+
+def require_confirm_or_user_input(desc):
+    """Requires either --confirm is passed or user input is provided to
+    confirm the operation"""
+    parser = argparse.ArgumentParser(description=desc)
+    parser.add_argument('--confirm', action='store_true',
+                        help='Skip user confirmation requirement.')
+    args = parser.parse_args()
+    if not args.confirm:
+        print('You are performing a DANGEROUS operation!')
+        print('This will DELETE the entire database! Are you sure? [y/N]')
+        res = input()
+        if res != 'y' and res != 'Y':
+            print('Cancelling')
+            return
 
 
 def load_settings():

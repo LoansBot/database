@@ -1,6 +1,8 @@
 import unittest
 from pypika import PostgreSQLQuery as Query, Table, Schema, Parameter
 import helper
+from psycopg2 import IntegrityError
+
 
 class UpTest(unittest.TestCase):
     def setUp(self):
@@ -48,6 +50,21 @@ class UpTest(unittest.TestCase):
         self.assertIsNone(pdig)
         self.assertIsNotNone(cat)
         self.assertIsNotNone(updat)
+
+    def test_uname_uniqueness(self):
+        users = Table('users')
+        self.cursor.execute(
+            Query.into(users).columns('username').insert(Parameter('%s')).get_sql(),
+            ('test-user',)
+        )
+        try:
+            self.cursor.execute(
+                Query.into(users).columns('username').insert(Parameter('%s')).get_sql(),
+                ('test-user',)
+            )
+            self.assertFalse(True, 'expected an error to be raised')
+        except IntegrityError as ex:
+            self.assertEqual(ex.pgcode, 23505) # unique_violation
 
 
 if __name__ == '__main__':
