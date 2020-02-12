@@ -53,5 +53,6 @@ jobs:
       env:
         DATABASE_HOST: postgres
         DATABASE_PORT: ${{ job.services.postgres.ports['5432'] }}
+        AWS_S3_FOLDER: test
       run: |
         python test_backup_and_restore.py --confirm
