@@ -3,7 +3,6 @@
 import json
 import os
 import importlib
-import configparser
 import psycopg2
 import settings
 
