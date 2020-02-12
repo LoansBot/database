@@ -41,7 +41,10 @@ def backup_database(local_file):
     old_pg_pass = os.environ.get('PGPASSWORD')
     os.environ['PGPASSWORD'] = db_pass
     os.system(f'pg_dump -Fc {db_name} -h {db_host} -p {db_port} -U {db_user} > {local_file}')
-    os.environ['PGPASSWORD'] = old_pg_pass
+    if old_pg_pass is not None:
+        os.environ['PGPASSWORD'] = old_pg_pass
+    else:
+        del os.environ['PGPASSWORD']
     print('Backup finished')
 
 
