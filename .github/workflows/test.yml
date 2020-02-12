@@ -54,5 +54,8 @@ jobs:
         DATABASE_HOST: postgres
         DATABASE_PORT: ${{ job.services.postgres.ports['5432'] }}
         AWS_S3_FOLDER: test
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+        AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
       run: |
         python test_backup_and_restore.py --confirm
