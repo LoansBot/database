@@ -51,12 +51,16 @@ def backup_database(local_file):
     print(f'Initiating database backup to {local_file}')
     old_pg_pass = os.environ.get('PGPASSWORD')
     os.environ['PGPASSWORD'] = db_pass
-    os.system(f'pg_dump -Fc {db_name} -h {db_host} -p {db_port} -U {db_user} > {local_file}')
+    status = os.system(f'pg_dump -Fc {db_name} -h {db_host} -p {db_port} -U {db_user} > {local_file}')
     if old_pg_pass is not None:
         os.environ['PGPASSWORD'] = old_pg_pass
     else:
         del os.environ['PGPASSWORD']
-    print('Backup finished')
+    if status == 0:
+        print('Backup finished')
+    else:
+        print(f'Backup failed with status {status}')
+        sys.exit(status)
 
 
 def upload_to_aws(local_file, bucket, s3_file, cfg):

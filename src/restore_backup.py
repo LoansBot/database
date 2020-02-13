@@ -40,16 +40,23 @@ def restore_database(local_file):
     db_user = cfg['DATABASE_USER']
     db_pass = cfg['DATABASE_PASSWORD']
     db_name = cfg['DATABASE_DBNAME']
+    auth_str = f'--dbname {db_name} -h {db_host} -p {db_port} -U {db_user}'
 
-    print(f'Initiating restore from {local_file}')
     old_pg_pass = os.environ.get('PGPASSWORD')
     os.environ['PGPASSWORD'] = db_pass
-    os.system(f'pg_restore -Fc --clean --create --dbname {db_name} -h {db_host} -p {db_port} -U {db_user} {local_file}')
+    print(f'Disconnecting all clients...')
+    os.system(f'psql {auth_str} -c \'SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity\'')
+    print(f'Initiating restore from {local_file}')
+    status = os.system(f'pg_restore -Fc --clean --create {auth_str} {local_file}')
     if old_pg_pass is not None:
         os.environ['PGPASSWORD'] = old_pg_pass
     else:
         del os.environ['PGPASSWORD']
-    print('Restore finished')
+    if status == 0:
+        print('Restore finished')
+    else:
+        print(f'Status failed with code {status}')
+        sys.exit(status)
 
 
 if __name__ == '__main__':
