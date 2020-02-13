@@ -59,7 +59,7 @@ def main():
 
     print('Initiating restore...')
     import restore_backup
-    restore_backup.main(args=['--confirm'])
+    restore_backup.main(args=['--confirm', 'downloaded.dump'])
 
     print('Reconnecting...')
     conn = helper.setup_connection()
