@@ -53,7 +53,7 @@ def restore_database(local_file):
         print('Restore finished')
     else:
         print(f'Status failed with code {status}')
-        sys.exit(status)
+        sys.exit(1)
 
 
 if __name__ == '__main__':

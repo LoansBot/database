@@ -61,7 +61,7 @@ def backup_database(local_file):
         print('Backup finished')
     else:
         print(f'Backup failed with status {status}')
-        sys.exit(status)
+        sys.exit(1)
 
 
 def upload_to_aws(local_file, bucket, s3_file, cfg):
