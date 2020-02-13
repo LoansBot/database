@@ -44,7 +44,7 @@ def restore_database(local_file):
     old_pg_pass = os.environ.get('PGPASSWORD')
     os.environ['PGPASSWORD'] = db_pass
     print(f'Initiating restore from {local_file}')
-    status = os.system(f'pg_restore -Fc --clean --create --dbname template0 {auth_str} {local_file}')
+    status = os.system(f'pg_restore -Fc --clean --create --dbname template1 {auth_str} {local_file}')
     if old_pg_pass is not None:
         os.environ['PGPASSWORD'] = old_pg_pass
     else:
