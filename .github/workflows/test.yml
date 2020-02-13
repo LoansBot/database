@@ -10,7 +10,7 @@ jobs:
         python_version: [3.7, 3.8]
     services:
       postgres:
-        image: postgres
+        image: postgres:11
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: dev
@@ -30,7 +30,7 @@ jobs:
         python-version: ${{ matrix.python_version }}
     - name: Install python dependencies
       run: |
-        sudo apt install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev postgresql-common libpq-dev postgresql-client-12
+        sudo apt install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev postgresql-common libpq-dev postgresql-client-11
         python -m pip install --upgrade pip
         python -m pip install -r requirements.txt
     - name: Lint with flake8
