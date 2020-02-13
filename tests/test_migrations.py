@@ -38,6 +38,7 @@ def main():
             sys.exit(1)
 
     conn = helper.setup_connection()
+    cursor = conn.cursor()
     print('Dropping all tables...')
     drop_all_tables(conn)
     print('Success!')
@@ -53,7 +54,7 @@ def main():
         if result.failures or result.errors:
             sys.exit(1)
         print(f'Applying migration {f}')
-        mod.up(conn)
+        mod.up(conn, cursor)
         conn.commit()
         print(f'Running up test for {f}')
         result = run_tests(runner, up_test_mod.UpTest)
@@ -61,14 +62,14 @@ def main():
             sys.exit(1)
         if hasattr(mod, 'down'):
             print(f'Rolling back migration {f}')
-            mod.down(conn)
+            mod.down(conn, cursor)
             conn.commit()
             print(f'Running down test for {f}')
             result = run_tests(runner, down_test_mod.DownTest)
             if result.failures or result.errors:
                 sys.exit(1)
             print(f'Reapplying migration {f}')
-            mod.up(conn)
+            mod.up(conn, cursor)
             conn.commit()
             print(f'Running up test for {f}')
             result = run_tests(runner, up_test_mod.UpTest)

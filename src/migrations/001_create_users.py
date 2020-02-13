@@ -1,8 +1,7 @@
-import psycopg2
+"""Creates the users table"""
 
 
-def up(conn: psycopg2):
-    cursor = conn.cursor()
+def up(conn, cursor):
     cursor.execute(
         '''
 CREATE TABLE users(
@@ -16,11 +15,8 @@ CREATE TABLE users(
         '''
     )
     print(cursor.query.decode('utf-8'))
-    cursor.close()
 
 
-def down(conn: psycopg2):
-    cursor = conn.cursor()
+def down(conn, cursor):
     cursor.execute('DROP TABLE users CASCADE')
     print(cursor.query.decode('utf-8'))
-    cursor.close()

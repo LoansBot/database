@@ -19,12 +19,13 @@ def main(migrations_dir='migrations'):
         raise Exception('Existing migrations aren\'t just the beginning of expected migrations')
 
     conn = setup_connection()
+    cursor = conn.cursor()
     for i in range(len(migrs), len(files)):
         file_ = files[i]
         print(f'Running migration migrations.{file_}')
         module = importlib.import_module(f'migrations.{file_}')
         try:
-            module.up(conn)
+            module.up(conn, cursor)
             print('Success! Committing..')
             conn.commit()
             print('Success! Saving migration as complete..')

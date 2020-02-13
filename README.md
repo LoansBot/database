@@ -36,8 +36,8 @@ alphabetical ascending ordering of the filenames. If a migration filename
 (without the suffix) is A, then the following files should exist:
 
 - src/migrations/A.py: The main migration file, which is a module containing
-  an up and down function which accept a single argument: a psycopg2 database
-  cursor.
+  an up and down function which accept two arguments: a psycopg2 database
+  connection and cursor. It should not commit the changes.
 - tests/migrations/A_down.py - This should contain a `unittest.TestCase`
   that should pass before the migration is applied.
 - tests/migrations/A_up.py - This should contain a `unittest.TestCase` that
