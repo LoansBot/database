@@ -39,7 +39,6 @@ def restore_database(local_file):
     db_port = int(cfg['DATABASE_PORT'])
     db_user = cfg['DATABASE_USER']
     db_pass = cfg['DATABASE_PASSWORD']
-    db_name = cfg['DATABASE_DBNAME']
     auth_str = f'-h {db_host} -p {db_port} -U {db_user}'
 
     old_pg_pass = os.environ.get('PGPASSWORD')
