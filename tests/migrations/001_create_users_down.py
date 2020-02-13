@@ -2,6 +2,7 @@ import unittest
 from pypika import PostgreSQLQuery as Query, Schema
 import helper
 
+
 class DownTest(unittest.TestCase):
     def setUp(self):
         self.connection = helper.setup_connection()

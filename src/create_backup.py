@@ -9,8 +9,19 @@ import json
 import settings
 
 
+REQUIRED_CFG = [
+    'AWS_S3_FOLDER', 'AWS_S3_BUCKET', 'DATABASE_HOST',
+    'DATABASE_PORT', 'DATABASE_USER', 'DATABASE_PASSWORD',
+    'DATABASE_DBNAME'
+]
+
+
 def main(args=None):
     cfg = settings.load_settings()
+    for k in REQUIRED_CFG:
+        if not cfg[k]:
+            raise Exception(f'Environment variable {k} is required but not set')
+
     localf = f'{time.time()}.dump'
     key = os.path.join(cfg['AWS_S3_FOLDER'], localf)
     backup_database(localf)
@@ -25,7 +36,7 @@ def main(args=None):
     os.rename(localf, 'uploaded.dump')
     print('Saving meta info to uploaded.json')
     with open('uploaded.json', 'w') as outfile:
-        json.dump({'key': key})
+        json.dump({'key': key}, outfile)
 
 
 def backup_database(local_file):

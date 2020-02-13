@@ -15,6 +15,7 @@ EXPECTED_KEYS = [
     'AWS_S3_FOLDER'
 ]
 
+
 def load_settings():
     cfg = configparser.ConfigParser()
     cfg.read('settings.ini')

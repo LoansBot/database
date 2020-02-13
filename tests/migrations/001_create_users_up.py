@@ -64,7 +64,7 @@ class UpTest(unittest.TestCase):
             )
             self.assertFalse(True, 'expected an error to be raised')
         except IntegrityError as ex:
-            self.assertEqual(ex.pgcode, '23505') # unique_violation
+            self.assertEqual(ex.pgcode, '23505')  # unique_violation
 
 
 if __name__ == '__main__':
