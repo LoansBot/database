@@ -44,14 +44,14 @@ jobs:
     - name: Run migration tests
       working-directory: ./tests
       env:
-        DATABASE_HOST: postgres
+        DATABASE_HOST: localhost
         DATABASE_PORT: ${{ job.services.postgres.ports['5432'] }}
       run: |
         python test_migrations.py --confirm
     - name: Run backup and restore tests
       working-directory: ./tests
       env:
-        DATABASE_HOST: postgres
+        DATABASE_HOST: localhost
         DATABASE_PORT: ${{ job.services.postgres.ports['5432'] }}
         AWS_S3_FOLDER: test
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
