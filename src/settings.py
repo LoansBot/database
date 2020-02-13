@@ -22,5 +22,8 @@ def load_settings():
     cfg = cfg['DEFAULT']
     for nm in EXPECTED_KEYS:
         if os.environ.get(nm):
+            print(f'Found environment variable {nm}')
             cfg[nm] = os.environ[nm]
+        else:
+            print(f'No environment variable found for {nm}')
     return cfg
