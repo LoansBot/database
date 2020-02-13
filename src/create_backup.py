@@ -7,6 +7,7 @@ import time
 import aws_utils
 import json
 import settings
+import sys
 
 
 REQUIRED_CFG = [
