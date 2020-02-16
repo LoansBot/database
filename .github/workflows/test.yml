@@ -47,7 +47,7 @@ jobs:
         DATABASE_HOST: localhost
         DATABASE_PORT: ${{ job.services.postgres.ports['5432'] }}
       run: |
-        python test_migrations.py --confirm
+        python test_migrations.py --confirm 2>&1
     - name: Run backup and restore tests
       working-directory: ./tests
       env:
