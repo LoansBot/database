@@ -3,14 +3,16 @@ import helper
 
 
 class DownTest(unittest.TestCase):
-    def setUp(self):
-        self.connection = helper.setup_connection()
-        self.cursor = self.connection.cursor()
+    @classmethod
+    def setUpClass(cls):
+        cls.connection = helper.setup_connection()
+        cls.cursor = cls.connection.cursor()
 
-    def tearDown(self):
-        self.cursor.close()
-        self.connection.rollback()
-        helper.teardown_connection(self.connection)
+    @classmethod
+    def tearDownClass(cls):
+        cls.cursor.close()
+        cls.connection.rollback()
+        helper.teardown_connection(cls.connection)
 
     def test_log_events_dne(self):
         self.assertFalse(

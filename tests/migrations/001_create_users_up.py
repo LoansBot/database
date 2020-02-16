@@ -4,14 +4,16 @@ import helper
 
 
 class UpTest(unittest.TestCase):
-    def setUpClass(self):
-        self.connection = helper.setup_connection()
-        self.cursor = self.connection.cursor()
+    @classmethod
+    def setUpClass(cls):
+        cls.connection = helper.setup_connection()
+        cls.cursor = cls.connection.cursor()
 
-    def tearDownClass(self):
-        self.cursor.close()
-        self.connection.rollback()
-        helper.teardown_connection(self.connection)
+    @classmethod
+    def tearDownClass(cls):
+        cls.cursor.close()
+        cls.connection.rollback()
+        helper.teardown_connection(cls.connection)
 
     def tearDown(self):
         self.connection.rollback()
