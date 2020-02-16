@@ -1,5 +1,4 @@
 import unittest
-from pypika import PostgreSQLQuery as Query, Schema
 import helper
 
 
@@ -10,19 +9,13 @@ class DownTest(unittest.TestCase):
 
     def tearDown(self):
         self.cursor.close()
+        self.connection.rollback()
         helper.teardown_connection(self.connection)
 
     def test_users_does_not_exist(self):
-        info_schema = Schema('information_schema').tables
-        self.cursor.execute(
-            Query.from_(info_schema)
-            .where(info_schema.table_type == 'BASE TABLE')
-            .where(info_schema.table_schema == 'public')
-            .select(1).limit(1).get_sql()
+        self.assertFalse(
+            helper.check_if_table_exist(self.cursor, 'users')
         )
-        result = self.cursor.fetchone()
-        self.connection.commit()
-        self.assertIsNone(result)
 
 
 if __name__ == '__main__':

@@ -4,6 +4,8 @@ import configparser
 import psycopg2
 import os
 import argparse
+from psycopg2 import IntegrityError
+from pypika import PostgreSQLQuery as Query, Schema, Parameter
 
 
 EXPECTED_KEYS = [
@@ -17,6 +19,32 @@ EXPECTED_KEYS = [
     'AWS_S3_BUCKET',
     'AWS_S3_FOLDER'
 ]
+
+
+def check_if_table_exist(cursor, tblname):
+    """Returns true if the given table exists and false otherwise"""
+    info_schema = Schema('information_schema').tables
+    cursor.execute(
+        Query.from_(info_schema)
+        .where(info_schema.table_type == 'BASE TABLE')
+        .where(info_schema.table_schema == 'public')
+        .where(info_schema.table_name == Parameter('%s'))
+        .select(1).limit(1).get_sql(),
+        (tblname,)
+    )
+    result = cursor.fetchone()
+    return result is not None
+
+
+def assert_fails_with_pgcode(asserter, pgcode, cursor, query, q_args=tuple()):
+    """Asserts that the given query fails with the given code. Note that this
+    puts the transaction in a bad state, so this is typically the last test in a
+    testcase"""
+    try:
+        cursor.execute(query, q_args)
+        asserter.assertFalse(True, 'expected an error to be raised')
+    except IntegrityError as ex:
+        asserter.assertEqual(ex.pgcode, str(pgcode))
 
 
 def require_confirm_or_user_input(desc):
