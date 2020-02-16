@@ -1,29 +1,26 @@
 import unittest
-from pypika import PostgreSQLQuery as Query, Table, Schema, Parameter
+from pypika import PostgreSQLQuery as Query, Table, Parameter
 import helper
 from psycopg2 import IntegrityError
 
 
 class UpTest(unittest.TestCase):
-    def setUp(self):
+    def setUpClass(self):
         self.connection = helper.setup_connection()
         self.cursor = self.connection.cursor()
 
-    def tearDown(self):
+    def tearDownClass(self):
         self.cursor.close()
+        self.connection.rollback()
         helper.teardown_connection(self.connection)
 
+    def tearDown(self):
+        self.connection.rollback()
+
     def test_users_does_exist(self):
-        info_schema = Schema('information_schema').tables
-        self.cursor.execute(
-            Query.from_(info_schema)
-            .where(info_schema.table_type == 'BASE TABLE')
-            .where(info_schema.table_schema == 'public')
-            .select(1).limit(1).get_sql()
+        self.assertTrue(
+            helper.check_if_table_exist(self.connection, self.cursor, 'users')
         )
-        result = self.cursor.fetchone()
-        self.connection.commit()
-        self.assertIsNotNone(result)
 
     def test_default_values(self):
         users = Table('users')
@@ -53,19 +50,10 @@ class UpTest(unittest.TestCase):
 
     def test_uname_uniqueness(self):
         users = Table('users')
-        self.cursor.execute(
-            Query.into(users).columns('username').insert(Parameter('%s')).get_sql(),
-            ('test-user',)
-        )
-        try:
-            self.cursor.execute(
-                Query.into(users).columns('username').insert(Parameter('%s')).get_sql(),
-                ('test-user',)
-            )
-            self.assertFalse(True, 'expected an error to be raised')
-        except IntegrityError as ex:
-            self.assertEqual(ex.pgcode, '23505')  # unique_violation
-
+        q_str = Query.into(users).columns('username').insert(Parameter('%s')).get_sql()
+        q_args = ('test-user',)
+        self.cursor.execute(q_str, q_args)
+        helper.assert_fails_with_pgcode(self, '23505', self.connection, self.cursor, q_str, q_args)
 
 if __name__ == '__main__':
     unittest.main()

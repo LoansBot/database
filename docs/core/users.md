@@ -20,5 +20,3 @@ Indexes:
     "users_username_key" UNIQUE CONSTRAINT, btree (username)
 Access method: heap
 ```
-
-## See Also
