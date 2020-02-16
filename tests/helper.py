@@ -20,6 +20,7 @@ EXPECTED_KEYS = [
     'AWS_S3_FOLDER'
 ]
 
+
 def check_if_table_exist(cursor, tblname):
     """Returns true if the given table exists and false otherwise"""
     info_schema = Schema('information_schema').tables
