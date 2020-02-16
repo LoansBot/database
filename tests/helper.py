@@ -5,7 +5,7 @@ import psycopg2
 import os
 import argparse
 from psycopg2 import IntegrityError
-from pypika import PostgreSQLQuery as Query, Schema
+from pypika import PostgreSQLQuery as Query, Schema, Parameter
 
 
 EXPECTED_KEYS = [
@@ -28,7 +28,9 @@ def check_if_table_exist(cursor, tblname):
         Query.from_(info_schema)
         .where(info_schema.table_type == 'BASE TABLE')
         .where(info_schema.table_schema == 'public')
-        .select(1).limit(1).get_sql()
+        .where(info_schema.table_name == Parameter('%s'))
+        .select(1).limit(1).get_sql(),
+        (tblname,)
     )
     result = cursor.fetchone()
     return result is not None
