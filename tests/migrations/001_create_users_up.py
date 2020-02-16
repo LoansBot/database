@@ -1,7 +1,6 @@
 import unittest
 from pypika import PostgreSQLQuery as Query, Table, Parameter
 import helper
-from psycopg2 import IntegrityError
 
 
 class UpTest(unittest.TestCase):
@@ -19,7 +18,7 @@ class UpTest(unittest.TestCase):
 
     def test_users_does_exist(self):
         self.assertTrue(
-            helper.check_if_table_exist(self.connection, self.cursor, 'users')
+            helper.check_if_table_exist(self.cursor, 'users')
         )
 
     def test_default_values(self):
@@ -53,7 +52,7 @@ class UpTest(unittest.TestCase):
         q_str = Query.into(users).columns('username').insert(Parameter('%s')).get_sql()
         q_args = ('test-user',)
         self.cursor.execute(q_str, q_args)
-        helper.assert_fails_with_pgcode(self, '23505', self.connection, self.cursor, q_str, q_args)
+        helper.assert_fails_with_pgcode(self, '23505', self.cursor, q_str, q_args)
 
 if __name__ == '__main__':
     unittest.main()

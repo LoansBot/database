@@ -14,7 +14,7 @@ class DownTest(unittest.TestCase):
 
     def test_users_does_not_exist(self):
         self.assertFalse(
-            helper.check_if_table_exist(self.connection, self.cursor, 'users')
+            helper.check_if_table_exist(self.cursor, 'users')
         )
 
 

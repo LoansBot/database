@@ -14,17 +14,17 @@ class DownTest(unittest.TestCase):
 
     def test_log_events_dne(self):
         self.assertFalse(
-            helper.check_if_table_exist(self.connection, self.cursor, 'log_events')
+            helper.check_if_table_exist(self.cursor, 'log_events')
         )
 
     def test_log_applications_dne(self):
         self.assertFalse(
-            helper.check_if_table_exist(self.connection, self.cursor, 'log_applications')
+            helper.check_if_table_exist(self.cursor, 'log_applications')
         )
 
     def test_log_identifiers_dne(self):
         self.assertFalse(
-            helper.check_if_table_exist(self.connection, self.cursor, 'log_identifiers')
+            helper.check_if_table_exist(self.cursor, 'log_identifiers')
         )
 
 

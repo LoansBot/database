@@ -20,20 +20,20 @@ EXPECTED_KEYS = [
     'AWS_S3_FOLDER'
 ]
 
-def check_if_table_exist(conn, cursor, tblname):
+def check_if_table_exist(cursor, tblname):
     """Returns true if the given table exists and false otherwise"""
     info_schema = Schema('information_schema').tables
-    self.cursor.execute(
+    cursor.execute(
         Query.from_(info_schema)
         .where(info_schema.table_type == 'BASE TABLE')
         .where(info_schema.table_schema == 'public')
         .select(1).limit(1).get_sql()
     )
-    result = self.cursor.fetchone()
+    result = cursor.fetchone()
     return result is not None
 
 
-def assert_fails_with_pgcode(asserter, pgcode, conn, cursor, query, q_args=tuple()):
+def assert_fails_with_pgcode(asserter, pgcode, cursor, query, q_args=tuple()):
     """Asserts that the given query fails with the given code. Note that this
     puts the transaction in a bad state, so this is typically the last test in a
     testcase"""

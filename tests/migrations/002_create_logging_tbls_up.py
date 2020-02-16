@@ -21,30 +21,30 @@ class UpTest(unittest.TestCase):
 
     def test_log_events_exists(self):
         self.assertTrue(
-            helper.check_if_table_exist(self.connection, self.cursor, 'log_events')
+            helper.check_if_table_exist(self.cursor, 'log_events')
         )
 
     def test_log_applications_exists(self):
         self.assertTrue(
-            helper.check_if_table_exist(self.connection, self.cursor, 'log_applications')
+            helper.check_if_table_exist(self.cursor, 'log_applications')
         )
 
     def test_log_identifiers_exists(self):
         self.assertTrue(
-            helper.check_if_table_exist(self.connection, self.cursor, 'log_identifiers')
+            helper.check_if_table_exist(self.cursor, 'log_identifiers')
         )
 
     def test_appname_unique(self):
         q_str = Query.into(self.apps).columns(self.apps.name).insert(Parameter('%s')).get_sql()
         q_args = ('appnm',)
         self.cursor.execute(q_str, q_args)
-        helper.assert_fails_with_pgcode(self, '23505', self.connection, self.cursor, q_str, q_args)
+        helper.assert_fails_with_pgcode(self, '23505', self.cursor, q_str, q_args)
 
     def test_iden_unique(self):
         q_str = Query.into(self.idens).columns(self.idens.identifier).insert(Parameter('%s')).get_sql()
         q_args = ('iden',)
         self.cursor.execute(q_str, q_args)
-        helper.assert_fails_with_pgcode(self, '23505', self.connection, self.cursor, q_str, q_args)
+        helper.assert_fails_with_pgcode(self, '23505', self.cursor, q_str, q_args)
 
     def test_event_defaults(self):
         self.cursor.execute(Query.into(self.apps).columns(self.apps.name).insert(Parameter('%s')).returning(self.apps.id).get_sql(), ('appnm',))
@@ -67,7 +67,7 @@ class UpTest(unittest.TestCase):
         self.cursor.execute(Query.into(self.idens).columns(self.idens.identifier).insert(Parameter('%s')).returning(self.idens.id).get_sql(), ('iden',))
         iden_id = self.cursor.fetchone()[0]
         helper.assert_fails_with_pgcode(
-            self, '23502', self.connection, self.cursor,
+            self, '23502', self.cursor,
             Query.into(self.events)
             .columns(self.events.application_id, self.events.identifier_id, self.events.message)
             .insert(*[Parameter('%s') for _ in range(3)])
@@ -79,7 +79,7 @@ class UpTest(unittest.TestCase):
         self.cursor.execute(Query.into(self.idens).columns(self.idens.identifier).insert(Parameter('%s')).returning(self.idens.id).get_sql(), ('iden',))
         iden_id = self.cursor.fetchone()[0]
         helper.assert_fails_with_pgcode(
-            self, '23502', self.connection, self.cursor,
+            self, '23502', self.cursor,
             Query.into(self.events)
             .columns(self.events.level, self.events.identifier_id, self.events.message)
             .insert(*[Parameter('%s') for _ in range(3)])
@@ -91,7 +91,7 @@ class UpTest(unittest.TestCase):
         self.cursor.execute(Query.into(self.apps).columns(self.apps.name).insert(Parameter('%s')).returning(self.apps.id).get_sql(), ('appnm',))
         app_id = self.cursor.fetchone()[0]
         helper.assert_fails_with_pgcode(
-            self, '23502', self.connection, self.cursor,
+            self, '23502', self.cursor,
             Query.into(self.events)
             .columns(self.events.level, self.events.application_id, self.events.message)
             .insert(*[Parameter('%s') for _ in range(3)])
