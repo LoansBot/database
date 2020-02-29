@@ -12,6 +12,7 @@ CREATE TABLE handled_fullnames(
     )
     print(cursor.query.decode('utf-8'))
 
+
 def down(conn, cursor):
     cursor.execute('DROP TABLE handled_fullnames CASCADE')
     print(cursor.query.decode('utf-8'))
