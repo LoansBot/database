@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-rm -r /webapps/dbhelpers/src
+rm -rf /webapps/dbhelpers/src
