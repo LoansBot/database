@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+echo "Loading environment vars.."
+source /home/ec2-user/secrets.sh
 echo "Performing backup.."
 cd /webapps/dbhelpers/src
 python3 create_backup.py

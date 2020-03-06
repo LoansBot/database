@@ -7,3 +7,4 @@ phases:
   files:
      - src/*
      - requirements.txt
+     - scripts/*
