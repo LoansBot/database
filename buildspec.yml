@@ -5,3 +5,4 @@ artifacts:
      - src/*
      - requirements.txt
      - scripts/*
+     - appspec.yml
