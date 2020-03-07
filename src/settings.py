@@ -17,9 +17,12 @@ EXPECTED_KEYS = [
 
 
 def load_settings():
-    cfg = configparser.ConfigParser()
-    cfg.read('settings.ini')
-    cfg = cfg['DEFAULT']
+    if os.path.exists('settings.ini'):
+        cfg = configparser.ConfigParser()
+        cfg.read('settings.ini')
+        cfg = cfg['DEFAULT']
+    else:
+        cfg = {}
     for nm in EXPECTED_KEYS:
         if os.environ.get(nm):
             cfg[nm] = os.environ[nm]

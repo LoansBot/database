@@ -4,16 +4,16 @@ files:
   - source: src
     destination: /webapps/dbhelpers/src
   - source: requirements.txt
-    destination: /webapps/dbhelpers/requirements.txt
+    destination: /webapps/dbhelpers
   - source: scripts
     destination: /webapps/dbhelpers/scripts
 hooks:
   BeforeInstall:
-    - location: /webapps/dbhelpers/scripts/before_install.sh
+    - location: scripts/before_install.sh
       timeout: 180
   AfterInstall:
-    - location:  /webapps/dbhelpers/scripts/after_install.sh
+    - location:  scripts/after_install.sh
       timeout: 180
   ApplicationStart:
-    - location:  /webapps/dbhelpers/scripts/application_start.sh
+    - location: scripts/application_start.sh
       timeout: 180
