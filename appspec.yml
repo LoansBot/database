@@ -4,7 +4,7 @@ files:
   - source: src
     destination: /webapps/dbhelpers/src
   - source: requirements.txt
-    destination: /webapps/dbhelpers/requirements.txt
+    destination: /webapps/dbhelpers
   - source: scripts
     destination: /webapps/dbhelpers/scripts
 hooks:
