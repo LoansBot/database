@@ -46,6 +46,9 @@ jobs:
       env:
         DATABASE_HOST: localhost
         DATABASE_PORT: ${{ job.services.postgres.ports['5432'] }}
+        DATABASE_USER: postgres
+        DATABASE_PASSWORD: dev
+        DATABASE_DBNAME: postgres
       run: |
         python test_migrations.py --confirm 2>&1
     - name: Run backup and restore tests
@@ -53,6 +56,9 @@ jobs:
       env:
         DATABASE_HOST: localhost
         DATABASE_PORT: ${{ job.services.postgres.ports['5432'] }}
+        DATABASE_USER: postgres
+        DATABASE_PASSWORD: dev
+        DATABASE_DBNAME: postgres
         AWS_S3_FOLDER: test
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
         AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}

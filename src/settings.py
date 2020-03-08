@@ -1,5 +1,4 @@
 """Utility function for loading settings"""
-import configparser
 import os
 
 
@@ -17,12 +16,7 @@ EXPECTED_KEYS = [
 
 
 def load_settings():
-    if os.path.exists('settings.ini'):
-        cfg = configparser.ConfigParser()
-        cfg.read('settings.ini')
-        cfg = cfg['DEFAULT']
-    else:
-        cfg = {}
+    cfg = {}
     for nm in EXPECTED_KEYS:
         if os.environ.get(nm):
             cfg[nm] = os.environ[nm]
