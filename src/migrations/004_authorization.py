@@ -122,7 +122,7 @@ CREATE INDEX ind_passw_auth_perm_on_permid
     )
 
     cursor.execute(
-        'ALTER TABLE users REMOVE COLUMN password_digest'
+        'ALTER TABLE users DROP COLUMN password_digest'
     )
     print(cursor.query.decode('utf-8'))
 
