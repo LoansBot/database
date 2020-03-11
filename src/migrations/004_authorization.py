@@ -144,3 +144,6 @@ def down(conn, cursor):
 
     cursor.execute('DROP TABLE authtokens CASCADE')
     print(cursor.query.decode('utf-8'))
+
+    cursor.execute('DROP TABLE permissions CASCADE')
+    print(cursor.query.decode('utf-8'))
