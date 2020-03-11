@@ -29,7 +29,7 @@ CREATE TABLE authtokens(
     print(cursor.query.decode('utf-8'))
 
     cursor.execute(
-        'CREATE INDEX ind_authtokens_user_id (user_id) ON authtokens'
+        'CREATE INDEX ind_authtokens_user_id ON authtokens(user_id)'
     )
     print(cursor.query.decode('utf-8'))
 
@@ -45,15 +45,15 @@ CREATE TABLE authtoken_permissions(
     print(cursor.query.decode('utf-8'))
     cursor.execute(
         '''
-CREATE INDEX ind_authtokenperms_authtoken_id (authtoken_id)
-    ON authtoken_permissions
+CREATE INDEX ind_authtokenperms_authtoken_id
+    ON authtoken_permissions(authtoken_id)
         '''
     )
     print(cursor.query.decode('utf-8'))
     cursor.execute(
         '''
-CREATE INDEX ind_authtokenperms_perm_id (permission_id)
-    ON authtoken_permissions
+CREATE INDEX ind_authtokenperms_perm_id
+    ON authtoken_permissions(permission_id)
         '''
     )
     print(cursor.query.decode('utf-8'))
@@ -77,16 +77,17 @@ CREATE TABLE password_authentications(
 
     cursor.execute(
         '''
-CREATE INDEX ind_passw_auths_on_user_id (user_id)
-    ON password_authentications
+CREATE INDEX ind_passw_auths_on_user_id
+    ON password_authentications(user_id)
+
         '''
     )
     print(cursor.query.decode('utf-8'))
 
     cursor.execute(
         '''
-CREATE UNIQUE INDEX ind_passw_auths_on_human_uid (user_id, human)
-    ON password_authentications
+CREATE UNIQUE INDEX ind_passw_auths_on_human_uid
+    ON password_authentications(user_id, human)
         '''
     )
     print(cursor.query.decode('utf-8'))
@@ -108,15 +109,15 @@ CREATE TABLE password_auth_permissions(
 
     cursor.execute(
         '''
-CREATE INDEX ind_passw_auth_perm_on_paid (password_authentication_id)
-    ON password_auth_permissions
+CREATE INDEX ind_passw_auth_perm_on_paid
+    ON password_auth_permissions(password_authentication_id)
         '''
     )
 
     cursor.execute(
         '''
-CREATE INDEX ind_passw_auth_perm_on_permid (permission_id)
-    ON password_auth_permissions
+CREATE INDEX ind_passw_auth_perm_on_permid
+    ON password_auth_permissions(permission_id)
         '''
     )
 
