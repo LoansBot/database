@@ -42,7 +42,7 @@ def check_if_column_exist(cursor, tblname, colname):
         Query.from_(columns)
         .where(columns.table_name == Parameter('%s'))
         .where(columns.column_name == Parameter('%s'))
-        .select(1).limit(1).getsql(),
+        .select(1).limit(1).get_sql(),
         (tblname, colname)
     )
     result = cursor.fetchone()
