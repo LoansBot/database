@@ -6,7 +6,7 @@ def up(conn, cursor):
     cursor.execute(
         '''
 CREATE TABLE permissions(
-    id SERIAL,
+    id SERIAL PRIMARY KEY,
     name CHARACTER VARYING (63) UNIQUE NOT NULL,
     description TEXT NOT NULL
 )
@@ -17,7 +17,7 @@ CREATE TABLE permissions(
     cursor.execute(
         '''
 CREATE TABLE authtokens(
-    id SERIAL,
+    id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     token CHARACTER (127) NOT NULL UNIQUE,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -36,7 +36,7 @@ CREATE TABLE authtokens(
     cursor.execute(
         '''
 CREATE TABLE authtoken_permissions(
-    id SERIAL,
+    id SERIAL PRIMARY KEY,
     authtoken_id INTEGER NOT NULL REFERENCES authtokens(id) ON DELETE CASCADE,
     permission_id INTEGER NOT NULL REFERENCES permissions(id) ON DELETE CASCADE
 )
@@ -61,7 +61,7 @@ CREATE INDEX ind_authtokenperms_perm_id
     cursor.execute(
         '''
 CREATE TABLE password_authentications(
-    id SERIAL,
+    id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     human BOOLEAN NOT NULL,
     hash_name CHARACTER VARYING(16) NOT NULL,
@@ -95,7 +95,7 @@ CREATE UNIQUE INDEX ind_passw_auths_on_human_uid
     cursor.execute(
         '''
 CREATE TABLE password_auth_permissions(
-    id SERIAL,
+    id SERIAL PRIMARY KEY,
     password_authentication_id
         INTEGER NOT NULL
         REFERENCES password_authentications(id)
