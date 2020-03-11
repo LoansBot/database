@@ -36,6 +36,19 @@ def check_if_table_exist(cursor, tblname):
     return result is not None
 
 
+def check_if_column_exist(cursor, tblname, colname):
+    columns = Schema('information_schema').columns
+    cursor.execute(
+        Query.from_(columns)
+        .where(columns.table_name == Parameter('%s'))
+        .where(columns.column_name == Parameter('%s'))
+        .select(1).limit(1).getsql(),
+        (tblname, colname)
+    )
+    result = cursor.fetchone()
+    return result is not None
+
+
 def assert_fails_with_pgcode(asserter, pgcode, cursor, query, q_args=tuple()):
     """Asserts that the given query fails with the given code. Note that this
     puts the transaction in a bad state, so this is typically the last test in a

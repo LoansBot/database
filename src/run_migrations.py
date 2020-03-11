@@ -32,7 +32,7 @@ def main(migrations_dir='migrations'):
             migrs.append(file_)
             _save_migrations(migrs)
             print('Success!')
-        except:
+        except:  # noqa: E722
             print('An exception occurred! Rolling back...')
             conn.rollback()
             print('Closing connection...')

@@ -47,6 +47,16 @@ jobs:
         DATABASE_DBNAME: postgres
       run: |
         python test_migrations.py --confirm 2>&1
+    - name: Print schema
+      working-directory: ./src
+      env:
+        DATABASE_HOST: localhost
+        DATABASE_PORT: ${{ job.services.postgres.ports['5432'] }}
+        DATABASE_USER: postgres
+        DATABASE_PASSWORD: dev
+        DATABASE_DBNAME: postgres
+      run: |
+        python display_schema.py
     - name: Run backup and restore tests
       working-directory: ./tests
       env:
