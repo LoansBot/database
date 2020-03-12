@@ -4,6 +4,7 @@ import helper
 import sys
 import filecmp
 from pypika import PostgreSQLQuery as Query, Table, Parameter
+import os
 
 
 def main():
@@ -12,6 +13,8 @@ def main():
     # Run migrations
     sys.path.append('../src')
     import run_migrations
+    run_migrations.MIGRATIONS_PATH = os.path.join(
+        '../src/', run_migrations.MIGRATIONS_PATH)
     run_migrations.main(migrations_dir='../src/migrations')
 
     name = secrets.token_urlsafe(8)
