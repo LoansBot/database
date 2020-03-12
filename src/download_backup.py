@@ -52,7 +52,10 @@ def get_most_recent(s3, cfg):
         Bucket=cfg['AWS_S3_BUCKET'],
         Prefix=cfg['AWS_S3_FOLDER']
     )
-    get_last_modified = lambda obj: int(obj['LastModified'].strftime('%s'))
+
+    def get_last_modified(obj):
+        return int(obj['LastModified'].strftime('%s'))
+
     last_added = [obj['Key'] for obj in sorted(objs, key=get_last_modified)][0]
 
     print(f'Most recent backup: {last_added}')
