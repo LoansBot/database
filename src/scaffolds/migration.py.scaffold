@@ -1,0 +1,17 @@
+"""Creates the X"""
+
+
+def up(conn, cursor):
+    cursor.execute(
+        '''
+        '''
+    )
+    print(cursor.query.decode('utf-8'))
+
+
+def down(conn, cursor):
+    cursor.execute(
+        '''
+        '''
+    )
+    print(cursor.query.decode('utf-8'))
