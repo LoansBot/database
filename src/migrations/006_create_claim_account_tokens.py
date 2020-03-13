@@ -1,6 +1,7 @@
 """Creates the tables for claiming an account or resetting your password. These
 are sent to the users reddits accounts."""
 
+
 def up(conn, cursor):
     cursor.execute(
         '''

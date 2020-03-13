@@ -1,5 +1,6 @@
 """Creates the X"""
 
+
 def up(conn, cursor):
     cursor.execute(
         '''
