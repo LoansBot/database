@@ -7,7 +7,7 @@ import psycopg2
 import settings
 
 
-MIGRATIONS_PATH = 'migrations.json'
+MIGRATIONS_PATH = os.environ.get('MIGRATIONS_PATH', 'migrations.json')
 
 
 def main(migrations_dir='migrations'):
