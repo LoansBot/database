@@ -1,6 +1,5 @@
 import unittest
 import helper
-from pypika import PostgreSQLQuery as Query, Table, Parameter
 
 
 class DownTest(unittest.TestCase):
