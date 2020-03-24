@@ -39,6 +39,13 @@ CREATE INDEX idx_resp_hists_resp_id ON response_histories (response_id)
     )
     print(cursor.query.decode('utf-8'))
 
+    cursor.execute(
+        '''
+CREATE INDEX idx_resp_hists_user_id ON response_histories (user_id)
+        '''
+    )
+    print(cursor.query.decode('utf-8'))
+
 
 def down(conn, cursor):
     cursor.execute('DROP TABLE response_histories CASCADE')
