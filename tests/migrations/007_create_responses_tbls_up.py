@@ -65,7 +65,7 @@ class UpTest(unittest.TestCase):
             Query.into(resp_hists).columns(
                 resp_hists.response_id, resp_hists.old_raw, resp_hists.new_raw,
                 resp_hists.reason
-            ).values(*(Parameter('%s') for _ in range(4)))
+            ).insert(*(Parameter('%s') for _ in range(4)))
             .returning(resp_hists.id).get_sql(),
             (resp_id, 'My response body', 'My response body 2', 'testing')
         )
