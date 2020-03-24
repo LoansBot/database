@@ -1,4 +1,6 @@
-"""Creates the X"""
+"""Creates the responses tables, which store the format of the messages that
+the loansbot (and occassionally the site) send out. The may be edited and we
+maintain a history of edits."""
 
 
 def up(conn, cursor):

@@ -23,29 +23,30 @@ def main(cl_args=None):
     if not os.path.exists('scaffolds'):
         raise Exception('Could not find the scaffolds directory')
 
-    if os.path.exists(os.path.join('migrations', args.name + '.py')):
+    migration_nm = args.name[:-3] if args.name[-3:] == '.py' else args.name
+    if os.path.exists(os.path.join('migrations', migration_nm + '.py')):
         raise Exception('That migration already exists')
 
     if not os.path.exists('../tests/migrations'):
         raise Exception('Could not find test migrations dir')
 
-    if os.path.exists(os.path.join('../tests/migrations', f'{args.name}_up.py')):
+    if os.path.exists(os.path.join('../tests/migrations', f'{migration_nm}_up.py')):
         raise Exception('The up-test already exists!')
 
-    if os.path.exists(os.path.join('../tests/migrations', f'{args.name}_down.py')):
+    if os.path.exists(os.path.join('../tests/migrations', f'{migration_nm}_down.py')):
         raise Exception('The down-test already exists!')
 
     shutil.copy(
         'scaffolds/migration.py.scaffold',
-        os.path.join('migrations', args.name + '.py')
+        os.path.join('migrations', migration_nm + '.py')
     )
     shutil.copy(
         'scaffolds/migration_up.py.scaffold',
-        os.path.join('..', 'tests', 'migrations', f'{args.name}_up.py')
+        os.path.join('..', 'tests', 'migrations', f'{migration_nm}_up.py')
     )
     shutil.copy(
         'scaffolds/migration_down.py.scaffold',
-        os.path.join('..', 'tests', 'migrations', f'{args.name}_down.py')
+        os.path.join('..', 'tests', 'migrations', f'{migration_nm}_down.py')
     )
 
 
