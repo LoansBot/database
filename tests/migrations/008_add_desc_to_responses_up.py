@@ -24,12 +24,12 @@ class UpTest(unittest.TestCase):
 
     def test_response_hist_old_desc_exists(self):
         self.assertTrue(
-            helper.check_if_column_exist(self.cursor, 'responses', 'old_desc')
+            helper.check_if_column_exist(self.cursor, 'response_histories', 'old_desc')
         )
 
     def test_response_hist_new_desc_exists(self):
         self.assertTrue(
-            helper.check_if_column_exist(self.cursor, 'responses', 'new_desc')
+            helper.check_if_column_exist(self.cursor, 'response_histories', 'new_desc')
         )
 
 
