@@ -16,6 +16,8 @@ historical reference.
  new_raw     | text                        |           | not null |                                                | extended |              |
  reason      | text                        |           | not null |                                                | extended |              |
  created_at  | timestamp without time zone |           | not null | now()                                          | plain    |              |
+ old_desc    | text                        |           | not null |                                                | extended |              |
+ new_desc    | text                        |           | not null |                                                | extended |              |
 Indexes:
     "response_histories_pkey" PRIMARY KEY, btree (id)
     "idx_resp_hists_resp_id" btree (response_id)

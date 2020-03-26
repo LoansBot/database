@@ -18,6 +18,7 @@ There is a history table described at `audit/response_histories`
  response_body | text                        |           | not null |                                       | extended |              |
  created_at    | timestamp without time zone |           | not null | now()                                 | plain    |              |
  updated_at    | timestamp without time zone |           | not null | now()                                 | plain    |              |
+ description   | text                        |           | not null |                                       | extended |              |
 Indexes:
     "responses_pkey" PRIMARY KEY, btree (id)
     "responses_name_key" UNIQUE CONSTRAINT, btree (name)
