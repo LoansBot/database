@@ -1,5 +1,6 @@
-venv/*
+venv
 *.pyc
 settings.ini
 src/settings.ini
 tests/settings.ini
+.vscode

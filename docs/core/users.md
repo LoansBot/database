@@ -18,5 +18,10 @@ Indexes:
     "users_username_key" UNIQUE CONSTRAINT, btree (username)
 Referenced by:
     TABLE "authtokens" CONSTRAINT "authtokens_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    TABLE "claim_tokens" CONSTRAINT "claim_tokens_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    TABLE "loan_admin_events" CONSTRAINT "loan_admin_events_admin_id_fkey" FOREIGN KEY (admin_id) REFERENCES users(id) ON DELETE SET NULL
+    TABLE "loans" CONSTRAINT "loans_borrower_id_fkey" FOREIGN KEY (borrower_id) REFERENCES users(id) ON DELETE CASCADE
+    TABLE "loans" CONSTRAINT "loans_lender_id_fkey" FOREIGN KEY (lender_id) REFERENCES users(id) ON DELETE CASCADE
     TABLE "password_authentications" CONSTRAINT "password_authentications_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    TABLE "response_histories" CONSTRAINT "response_histories_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 ```
