@@ -7,7 +7,7 @@ def up(conn, cursor):
         CREATE TABLE currencies (
             id SERIAL PRIMARY KEY,
             code CHARACTER VARYING(4) NOT NULL UNIQUE,
-            symbol CHARACTER VARYING(3) NOT NULL,
+            symbol CHARACTER VARYING(5) NOT NULL,
             symbol_on_left BOOLEAN NOT NULL,
             exponent SMALLINT NOT NULL
         )
