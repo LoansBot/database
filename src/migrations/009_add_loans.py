@@ -142,7 +142,7 @@ def up(conn, cursor):
         '''
         CREATE TABLE loan_unpaid_events (
             id SERIAL PRIMARY KEY,
-            loan_id NOT NULL REFERENCES loans(id) ON DELETE CASCADE,
+            loan_id INTEGER NOT NULL REFERENCES loans(id) ON DELETE CASCADE,
             unpaid BOOLEAN NOT NULL,
             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         )
