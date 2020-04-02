@@ -102,7 +102,7 @@ def up(conn, cursor):
         CREATE TABLE loan_admin_events (
             id SERIAL PRIMARY KEY,
             loan_id INTEGER NOT NULL REFERENCES loans(id) ON DELETE CASCADE,
-            admin_id INTEGER NULL REFERENCES users(id) ON DELETE NULLIFY,
+            admin_id INTEGER NULL REFERENCES users(id) ON DELETE SET NULL,
             reason TEXT NOT NULL,
             old_principal_id INTEGER NOT NULL REFERENCES moneys(id) ON DELETE RESTRICT,
             new_principal_id INTEGER NOT NULL REFERENCES moneys(id) ON DELETE RESTRICT,
