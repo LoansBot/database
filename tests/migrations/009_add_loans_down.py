@@ -27,9 +27,6 @@ class DownTest(unittest.TestCase):
     def tearDown(self):
         self.connection.rollback()
 
-    def test_foo(self):
-        self.assertTrue(False)
-
     def test_tables_do_not_exist(self):
         for tbl in TABLES:
             self.assertFalse(
