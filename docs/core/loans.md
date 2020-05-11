@@ -26,7 +26,7 @@ are given is considered entirely out-of-scope of the LoansBot:
  repaid_at              | timestamp without time zone |           |          |                                   | plain   |              |
  unpaid_at              | timestamp without time zone |           |          |                                   | plain   |              |
  deleted_at             | timestamp without time zone |           |          |                                   | plain   |              |
- Indexes:
+Indexes:
     "loans_pkey" PRIMARY KEY, btree (id)
     "idx_loans_borrower" btree (borrower_id)
     "idx_loans_created_at" btree (created_at)
@@ -40,6 +40,7 @@ Foreign-key constraints:
     "loans_principal_repayment_id_fkey" FOREIGN KEY (principal_repayment_id) REFERENCES moneys(id) ON DELETE RESTRICT
 Referenced by:
     TABLE "loan_admin_events" CONSTRAINT "loan_admin_events_loan_id_fkey" FOREIGN KEY (loan_id) REFERENCES loans(id) ON DELETE CASCADE
+    TABLE "loan_creation_infos" CONSTRAINT "loan_creation_infos_loan_id_fkey" FOREIGN KEY (loan_id) REFERENCES loans(id) ON DELETE CASCADE
     TABLE "loan_repayment_events" CONSTRAINT "loan_repayment_events_loan_id_fkey" FOREIGN KEY (loan_id) REFERENCES loans(id) ON DELETE CASCADE
     TABLE "loan_unpaid_events" CONSTRAINT "loan_unpaid_events_loan_id_fkey" FOREIGN KEY (loan_id) REFERENCES loans(id) ON DELETE CASCADE
 ```
