@@ -1,4 +1,5 @@
-"""Creates the X"""
+"""Creates the loan creation infos, which identify some information surrounding
+why a loan was created."""
 
 
 def up(conn, cursor):
