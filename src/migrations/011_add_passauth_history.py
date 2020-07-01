@@ -46,3 +46,7 @@ def down(conn, cursor):
         'DROP TABLE password_authentication_events CASCADE'
     )
     print(cursor.query.decode('utf-8'))
+
+    cursor.execute(
+        'ALTER TABLE password_authentications DROP COLUMN deleted'
+    )
