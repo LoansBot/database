@@ -26,6 +26,7 @@ authentication they are attempting to use.
  iterations | integer                     |           | not null |                                                      | plain    |              |
  created_at | timestamp without time zone |           | not null | CURRENT_TIMESTAMP                                    | plain    |              |
  last_seen  | timestamp without time zone |           | not null | CURRENT_TIMESTAMP                                    | plain    |              |
+ deleted    | boolean                     |           | not null | false                                                | plain    |              |
 Indexes:
     "password_authentications_pkey" PRIMARY KEY, btree (id)
     "ind_passw_auths_on_human_uid" UNIQUE, btree (user_id, human)
@@ -35,4 +36,5 @@ Foreign-key constraints:
     "password_authentications_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 Referenced by:
     TABLE "password_auth_permissions" CONSTRAINT "password_auth_permissions_password_authentication_id_fkey" FOREIGN KEY (password_authentication_id) REFERENCES password_authentications(id) ON DELETE CASCADE
+    TABLE "password_authentication_events" CONSTRAINT "password_authentication_events_password_authentication_id_fkey" FOREIGN KEY (password_authentication_id) REFERENCES password_authentications(id) ON DELETE CASCADE
 ```
