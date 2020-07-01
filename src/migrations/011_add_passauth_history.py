@@ -10,6 +10,7 @@ def up(conn, cursor):
             type TEXT NOT NULL,
             reason TEXT NOT NULL,
             user_id INTEGER NULL REFERENCES users(id) ON DELETE SET NULL,
+            permission_id INTEGER NULL REFERENCES permissions(id) ON DELETE CASCADE,
             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         )
         '''
@@ -28,6 +29,13 @@ def up(conn, cursor):
         '''
         CREATE INDEX idx_pass_auth_events_on_user_id
             ON password_authentication_events(user_id)
+        '''
+    )
+    print(cursor.query.decode('utf-8'))
+
+    cursor.execute(
+        '''
+        ALTER TABLE password_authentications ADD COLUMN deleted BOOLEAN NOT NULL DEFAULT FALSE
         '''
     )
     print(cursor.query.decode('utf-8'))
