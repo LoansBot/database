@@ -10,7 +10,7 @@ def main(cl_args=None):
     parser.add_argument(
         'name',
         type=str,
-        help='The name of the migratin, i.e., 001_create_users'
+        help='The name of the migration, i.e., 001_create_users'
     )
     args = parser.parse_args(cl_args)
 
