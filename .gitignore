@@ -4,3 +4,4 @@ settings.ini
 src/settings.ini
 tests/settings.ini
 .vscode
+src/migrations.json
