@@ -50,3 +50,4 @@ def down(conn, cursor):
     cursor.execute(
         'ALTER TABLE password_authentications DROP COLUMN deleted'
     )
+    print(cursor.query.decode('utf-8'))
