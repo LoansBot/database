@@ -4,15 +4,20 @@ we can revoke all authtokens from a particular source, etc."""
 
 def up(conn, cursor):
     cursor.execute(
+        'TRUNCATE authtokens CASCADE'
+    )
+    print(cursor.query.decode('utf-8'))
+
+    cursor.execute(
         '''
-        ALTER TABLE authtokens ADD COLUMN source_type (TEXT NOT NULL)
+        ALTER TABLE authtokens ADD COLUMN source_type TEXT NOT NULL
         '''
     )
     print(cursor.query.decode('utf-8'))
 
     cursor.execute(
         '''
-        ALTER TABLE authtokens ADD COLUMN source_id (INTEGER NOT NULL)
+        ALTER TABLE authtokens ADD COLUMN source_id INTEGER NOT NULL
         '''
     )
     print(cursor.query.decode('utf-8'))
