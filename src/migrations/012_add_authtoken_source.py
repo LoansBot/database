@@ -4,7 +4,9 @@ we can revoke all authtokens from a particular source, etc."""
 
 def up(conn, cursor):
     cursor.execute(
-        'TRUNCATE authtokens CASCADE'
+        '''
+        TRUNCATE authtokens CASCADE
+        '''
     )
     print(cursor.query.decode('utf-8'))
 
@@ -24,7 +26,8 @@ def up(conn, cursor):
 
     cursor.execute(
         '''
-        CREATE INDEX idx_authtokens_on_source (source_type, source_id)
+        CREATE INDEX idx_authtokens_on_source
+            ON authtokens(source_type, source_id)
         '''
     )
     print(cursor.query.decode('utf-8'))
