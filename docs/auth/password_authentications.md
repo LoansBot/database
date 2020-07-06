@@ -11,6 +11,11 @@ permissions. The permissions are passed to the authtoken upon a successful
 login. For non-human logins, the client must provide the id of the password
 authentication they are attempting to use.
 
+In general the parameters are for the pbkdf2_hmac algorithm, unless the hash
+name starts with 'scrypt', in which the hash name will be in the form
+`scrypt-{block_size}-{derived_key_length}`, the salt still behaves as a salt,
+and iterations should be reinterpreted as CPU/Memory cost factor.
+
 ## Schema
 
 ```
