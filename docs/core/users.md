@@ -25,4 +25,6 @@ Referenced by:
     TABLE "password_authentication_events" CONSTRAINT "password_authentication_events_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
     TABLE "password_authentications" CONSTRAINT "password_authentications_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     TABLE "response_histories" CONSTRAINT "response_histories_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+    TABLE "user_settings_events" CONSTRAINT "user_settings_events_changer_user_id_fkey" FOREIGN KEY (changer_user_id) REFERENCES users(id) ON DELETE SET NULL
+    TABLE "user_settings_events" CONSTRAINT "user_settings_events_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ```
