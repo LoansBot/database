@@ -19,7 +19,7 @@ class UpTest(unittest.TestCase):
 
     def test_allows_two_nonhuman(self):
         self.cursor.execute(
-            'INSERT INTO users (username) VALUES (%s) RETURNING id', 'foo'
+            'INSERT INTO users (username) VALUES (%s) RETURNING id', ('foo',)
         )
         (user_id,) = self.cursor.fetchone()
 
@@ -34,7 +34,7 @@ class UpTest(unittest.TestCase):
 
     def test_allows_exactly_one_human(self):
         self.cursor.execute(
-            'INSERT INTO users (username) VALUES (%s) RETURNING id', 'foo'
+            'INSERT INTO users (username) VALUES (%s) RETURNING id', ('foo',)
         )
         (user_id,) = self.cursor.fetchone()
 
