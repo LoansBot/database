@@ -27,17 +27,20 @@ https://reddit.com/comments/{parent_id}/any_text_here/{comment_id}
 ## Explain
 
 ```
- old_country         | text                        |           |          |                                                      | extended |              |
- new_country         | text                        |           |          |                                                      | extended |              |
- old_deleted         | boolean                     |           | not null |                                                      | plain    |              |
- new_deleted         | boolean                     |           | not null |                                                      | plain    |              |
- changed_at          | timestamp without time zone |           | not null | CURRENT_TIMESTAMP                                    | plain    |              |
- purged_at           | timestamp without time zone |           |          |                                                      | plain    |              |
+                                                     Table "public.loan_creation_infos"
+      Column      |  Type   | Collation | Nullable |                     Default                     | Storage  | Stats target | Description
+------------------+---------+-----------+----------+-------------------------------------------------+----------+--------------+-------------
+ id               | integer |           | not null | nextval('loan_creation_infos_id_seq'::regclass) | plain    |              |
+ loan_id          | integer |           | not null |                                                 | plain    |              |
+ type             | integer |           | not null |                                                 | plain    |              |
+ parent_fullname  | text    |           |          |                                                 | extended |              |
+ comment_fullname | text    |           |          |                                                 | extended |              |
+ mod_user_id      | integer |           |          |                                                 | plain    |              |
 Indexes:
-    "user_demographic_history_pkey" PRIMARY KEY, btree (id)
-    "user_demographic_history_on_changed_by" btree (changed_by_user_id)
-    "user_demographic_history_on_demographic" btree (user_demographic_id)
+    "loan_creation_infos_pk" PRIMARY KEY, btree (id)
+    "loan_creation_infos_loan_id_key" UNIQUE CONSTRAINT, btree (loan_id)
+    "index_loan_creation_infos_on_mod_user_id" btree (mod_user_id)
 Foreign-key constraints:
-    "user_demographic_history_changed_by_user_id_fkey" FOREIGN KEY (changed_by_user_id) REFERENCES users(id) ON DELETE SET NULL
-    "user_demographic_history_user_demographic_id_fkey" FOREIGN KEY (user_demographic_id) REFERENCES user_demographics(id) ON DELETE CASCADE
+    "loan_creation_infos_loan_id_fkey" FOREIGN KEY (loan_id) REFERENCES loans(id) ON DELETE CASCADE
+    "loan_creation_infos_mod_user_id_fkey" FOREIGN KEY (mod_user_id) REFERENCES users(id) ON DELETE SET NULL
 ```
