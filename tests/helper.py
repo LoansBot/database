@@ -5,7 +5,8 @@ import psycopg2
 import os
 import argparse
 from psycopg2 import IntegrityError
-from pypika import PostgreSQLQuery as Query, Schema, Parameter
+from pypika import PostgreSQLQuery as Query, Schema, Table, Parameter
+from pypika.functions import Cast
 
 
 EXPECTED_KEYS = [
@@ -47,6 +48,23 @@ def check_if_column_exist(cursor, tblname, colname):
     )
     result = cursor.fetchone()
     return result is not None
+
+
+def check_if_pkey_exists(cursor, tblname):
+    pg_indices = Table('pg_index')
+    pg_attributes = Table('pg_attribute')
+    cursor.execute(
+        Query.from_(pg_indices).select(1)
+        .where(
+            pg_indices.indrelid == Cast(Parameter('%s'), 'regclass')
+        )
+        .where(
+            pg_indices.indisprimary
+        )
+        .get_sql(),
+        (tblname,)
+    )
+    return cursor.fetchone() is not None
 
 
 def assert_fails_with_pgcode(asserter, pgcode, cursor, query, q_args=tuple()):

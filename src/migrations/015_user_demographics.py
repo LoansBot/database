@@ -5,7 +5,7 @@ def up(conn, cursor):
     cursor.execute(
         '''
         CREATE TABLE user_demographics (
-            id SERIAL,
+            id SERIAL PRIMARY KEY,
             user_id INTEGER UNIQUE NOT NULL REFERENCES users(id) ON DELETE CASCADE,
             email TEXT NULL DEFAULT NULL,
             name TEXT NULL DEFAULT NULL,
@@ -24,7 +24,7 @@ def up(conn, cursor):
     cursor.execute(
         '''
         CREATE TABLE user_demographic_lookups (
-            id SERIAL,
+            id SERIAL PRIMARY KEY,
             admin_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
             email TEXT NULL,
             name TEXT NULL,
@@ -51,7 +51,7 @@ def up(conn, cursor):
     cursor.execute(
         '''
         CREATE TABLE user_demographic_views (
-            id SERIAL,
+            id SERIAL PRIMARY KEY,
             user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
             admin_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
             lookup_id INTEGER NULL DEFAULT NULL REFERENCES user_demographic_lookups(id) ON DELETE CASCADE,
@@ -72,7 +72,7 @@ def up(conn, cursor):
     cursor.execute(
         '''
         CREATE TABLE user_demographic_history (
-            id SERIAL,
+            id SERIAL PRIMARY KEY,
             user_demographic_id INTEGER NOT NULL REFERENCES user_demographics(id) ON DELETE CASCADE,
             changed_by_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE SET NULL,
             old_email TEXT NULL,
