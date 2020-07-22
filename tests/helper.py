@@ -52,7 +52,6 @@ def check_if_column_exist(cursor, tblname, colname):
 
 def check_if_pkey_exists(cursor, tblname):
     pg_indices = Table('pg_index')
-    pg_attributes = Table('pg_attribute')
     cursor.execute(
         Query.from_(pg_indices).select(1)
         .where(
