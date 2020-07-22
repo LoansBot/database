@@ -30,7 +30,7 @@ def up(conn, cursor):
 def down(conn, cursor):
     cursor.execute(
         '''
-        ALTER TABLE user_settings_events DROP CONSTRAINT loan_creation_infos_pk
+        ALTER TABLE loan_creation_infos DROP CONSTRAINT loan_creation_infos_pk
         '''
     )
     print(cursor.query.decode('utf-8'))
