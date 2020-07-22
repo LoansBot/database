@@ -30,6 +30,7 @@ class DownTest(unittest.TestCase):
         )
         q_args = (user_id, False, 'foo', 'foo', 'foo', 10)
         self.cursor.execute(q_str, q_args)
+        q_args = (user_id, False, 'foo', 'foo2', 'foo2', 10)
         helper.assert_fails_with_pgcode(
             self, '23505', self.cursor, q_str, q_args)
 
@@ -46,6 +47,7 @@ class DownTest(unittest.TestCase):
         )
         q_args = (user_id, True, 'foo', 'foo', 'foo', 10)
         self.cursor.execute(q_str, q_args)
+        q_args = (user_id, True, 'foo', 'foo2', 'foo2', 10)
         helper.assert_fails_with_pgcode(
             self, '23505', self.cursor, q_str, q_args)
 
