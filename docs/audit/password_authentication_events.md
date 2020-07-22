@@ -27,10 +27,11 @@ Valid types:
  permission_id              | integer                     |           |          |                                                            | plain    |              |
  created_at                 | timestamp without time zone |           | not null | CURRENT_TIMESTAMP                                          | plain    |              |
 Indexes:
+    "password_authentication_events_pk" PRIMARY KEY, btree (id)
     "idx_pass_auth_events_on_pass_auth_id" btree (password_authentication_id)
     "idx_pass_auth_events_on_user_id" btree (user_id)
 Foreign-key constraints:
     "password_authentication_events_password_authentication_id_fkey" FOREIGN KEY (password_authentication_id) REFERENCES password_authentications(id) ON DELETE CASCADE
     "password_authentication_events_permission_id_fkey" FOREIGN KEY (permission_id) REFERENCES permissions(id) ON DELETE CASCADE
-    "password_authentication_events_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NUL
+    "password_authentication_events_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 ```

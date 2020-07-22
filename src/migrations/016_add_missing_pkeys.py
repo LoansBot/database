@@ -1,4 +1,4 @@
-"""Creates the X"""
+"""Adds primary keys to tables which were missing them"""
 
 
 def up(conn, cursor):

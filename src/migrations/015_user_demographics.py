@@ -1,4 +1,4 @@
-"""Creates the X"""
+"""Creates the user demographics table and related audit tables"""
 
 
 def up(conn, cursor):
