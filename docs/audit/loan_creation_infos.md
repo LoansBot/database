@@ -37,6 +37,7 @@ https://reddit.com/comments/{parent_id}/any_text_here/{comment_id}
  comment_fullname | text    |           |          |                                                 | extended |              |
  mod_user_id      | integer |           |          |                                                 | plain    |              |
 Indexes:
+    "loan_creation_infos_pk" PRIMARY KEY, btree (id)
     "loan_creation_infos_loan_id_key" UNIQUE CONSTRAINT, btree (loan_id)
     "index_loan_creation_infos_on_mod_user_id" btree (mod_user_id)
 Foreign-key constraints:

@@ -20,6 +20,7 @@ blob.
  new_value       | text                        |           |          |                                                  | extended |              |
  created_at      | timestamp without time zone |           | not null | CURRENT_TIMESTAMP                                | plain    |              |
 Indexes:
+    "user_settings_events_pk" PRIMARY KEY, btree (id)
     "idx_user_settings_events_on_changer_user_id" btree (changer_user_id)
     "idx_user_settings_events_on_user_id" btree (user_id)
 Foreign-key constraints:

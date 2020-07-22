@@ -34,7 +34,7 @@ and iterations should be reinterpreted as CPU/Memory cost factor.
  deleted    | boolean                     |           | not null | false                                                | plain    |              |
 Indexes:
     "password_authentications_pkey" PRIMARY KEY, btree (id)
-    "ind_passw_auths_on_human_uid" UNIQUE, btree (user_id, human)
+    "ind_passw_auths_on_human_uid" UNIQUE, btree (user_id, human) WHERE human
     "password_authentications_hash_key" UNIQUE CONSTRAINT, btree (hash)
     "ind_passw_auths_on_user_id" btree (user_id)
 Foreign-key constraints:
