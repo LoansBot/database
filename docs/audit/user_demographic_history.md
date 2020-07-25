@@ -20,8 +20,6 @@ arbitrary value (typically null or false) if `purged_at` is set.
  changed_by_user_id  | integer                     |           | not null |                                                      | plain    |              |
  old_email           | text                        |           |          |                                                      | extended |              |
  new_email           | text                        |           |          |                                                      | extended |              |
- old_email_verified  | boolean                     |           | not null |                                                      | plain    |              |
- new_email_verified  | boolean                     |           | not null |                                                      | plain    |              |
  old_name            | text                        |           |          |                                                      | extended |              |
  new_name            | text                        |           |          |                                                      | extended |              |
  old_street_address  | text                        |           |          |                                                      | extended |              |
