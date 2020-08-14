@@ -32,5 +32,20 @@ lenders in good standing will often prominently state it.
 ## Schema
 
 ```
-
+                                                            Table "public.trusts"
+   Column   |            Type             | Collation | Nullable |              Default               | Storage  | Stats target | Description
+------------+-----------------------------+-----------+----------+------------------------------------+----------+--------------+-------------
+ id         | integer                     |           | not null | nextval('trusts_id_seq'::regclass) | plain    |              |
+ user_id    | integer                     |           | not null |                                    | plain    |              |
+ status     | text                        |           | not null |                                    | extended |              |
+ reason     | text                        |           | not null |                                    | extended |              |
+ created_at | timestamp without time zone |           | not null | CURRENT_TIMESTAMP                  | plain    |              |
+Indexes:
+    "trusts_pkey" PRIMARY KEY, btree (id)
+    "trusts_user_id_key" UNIQUE CONSTRAINT, btree (user_id)
+    "user_id_and_status_on_trusts" btree (user_id, status)
+Foreign-key constraints:
+    "trusts_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+Referenced by:
+    TABLE "trust_events" CONSTRAINT "trust_events_trust_id_fkey" FOREIGN KEY (trust_id) REFERENCES trusts(id) ON DELETE CASCADE
 ```
