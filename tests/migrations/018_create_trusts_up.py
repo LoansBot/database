@@ -17,14 +17,24 @@ class UpTest(unittest.TestCase):
     def tearDown(self):
         self.connection.rollback()
 
-    def test_trust_blocklist_exists(self):
+    def test_trusts_exists(self):
         self.assertTrue(
-            helper.check_if_table_exist(self.cursor, 'trust_blocklist')
+            helper.check_if_table_exist(self.cursor, 'trusts')
         )
 
-    def test_trust_blocklist_has_pkey(self):
+    def test_trusts_has_pkey(self):
         self.assertTrue(
-            helper.check_if_pkey_exists(self.cursor, 'trust_blocklist')
+            helper.check_if_pkey_exists(self.cursor, 'trusts')
+        )
+
+    def test_trust_events_exists(self):
+        self.assertTrue(
+            helper.check_if_table_exist(self.cursor, 'trust_events')
+        )
+
+    def test_trust_events_has_pkey(self):
+        self.assertTrue(
+            helper.check_if_pkey_exists(self.cursor, 'trust_events')
         )
 
 

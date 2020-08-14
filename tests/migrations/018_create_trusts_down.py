@@ -17,9 +17,14 @@ class DownTest(unittest.TestCase):
     def tearDown(self):
         self.connection.rollback()
 
-    def test_trust_blocklist_dne(self):
+    def test_trusts_dne(self):
         self.assertFalse(
-            helper.check_if_table_exist(self.cursor, 'trust_blocklist')
+            helper.check_if_table_exist(self.cursor, 'trusts')
+        )
+
+    def test_trust_events_dne(self):
+        self.assertFalse(
+            helper.check_if_table_exist(self.cursor, 'trust_events')
         )
 
 
