@@ -19,7 +19,7 @@ class DownTest(unittest.TestCase):
 
     def test_comments_dne(self):
         self.assertFalse(
-            helper.check_if_table_exists(self.cursor, 'comments')
+            helper.check_if_table_exist(self.cursor, 'comments')
         )
 
 
