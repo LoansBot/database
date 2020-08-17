@@ -19,12 +19,12 @@ class UpTest(unittest.TestCase):
 
     def test_comments_exists(self):
         self.assertTrue(
-            helper.check_if_table_exist(self.cursor, 'comments')
+            helper.check_if_table_exist(self.cursor, 'trust_comments')
         )
 
     def test_comments_has_pkey(self):
         self.assertTrue(
-            helper.check_if_pkey_exists(self.cursor, 'comments')
+            helper.check_if_pkey_exists(self.cursor, 'trust_comments')
         )
 
 
