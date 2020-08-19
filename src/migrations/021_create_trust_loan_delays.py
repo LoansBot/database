@@ -10,7 +10,7 @@ def up(conn, cursor):
             user_id INTEGER NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
             loans_completed_as_lender INTEGER NOT NULL,
             min_review_at TIMESTAMP NULL,
-            created_at NOT NULL DEFAULT CURRENT_TIMESTAMP
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         )
         '''
     )
