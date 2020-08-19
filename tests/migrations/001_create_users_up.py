@@ -56,5 +56,6 @@ class UpTest(unittest.TestCase):
         self.cursor.execute(q_str, q_args)
         helper.assert_fails_with_pgcode(self, '23505', self.cursor, q_str, q_args)
 
+
 if __name__ == '__main__':
     unittest.main()

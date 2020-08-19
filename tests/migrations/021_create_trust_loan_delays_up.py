@@ -1,5 +1,4 @@
 import unittest
-from pypika import PostgreSQLQuery as Query, Table, Parameter
 import helper
 
 
@@ -18,17 +17,15 @@ class UpTest(unittest.TestCase):
     def tearDown(self):
         self.connection.rollback()
 
-    def test_handled_fullnames_does_exist(self):
+    def test_trust_loan_delays_exists(self):
         self.assertTrue(
-            helper.check_if_table_exist(self.cursor, 'handled_fullnames')
+            helper.check_if_table_exist('trust_loan_delays')
         )
 
-    def test_fullname_uniqueness(self):
-        hfullnms = Table('handled_fullnames')
-        q_str = Query.into(hfullnms).columns('fullname').insert(Parameter('%s')).get_sql()
-        q_args = ('t1_test',)
-        self.cursor.execute(q_str, q_args)
-        helper.assert_fails_with_pgcode(self, '23505', self.cursor, q_str, q_args)
+    def test_trust_loan_delays_has_pkey(self):
+        self.assertTrue(
+            helper.check_if_pkey_exists('trust_loan_delays')
+        )
 
 
 if __name__ == '__main__':

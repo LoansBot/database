@@ -101,5 +101,6 @@ class UpTest(unittest.TestCase):
             (1, app_id, 'my message')
         )
 
+
 if __name__ == '__main__':
     unittest.main()
