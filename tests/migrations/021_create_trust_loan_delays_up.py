@@ -19,12 +19,12 @@ class UpTest(unittest.TestCase):
 
     def test_trust_loan_delays_exists(self):
         self.assertTrue(
-            helper.check_if_table_exist('trust_loan_delays')
+            helper.check_if_table_exist(self.cursor, 'trust_loan_delays')
         )
 
     def test_trust_loan_delays_has_pkey(self):
         self.assertTrue(
-            helper.check_if_pkey_exists('trust_loan_delays')
+            helper.check_if_pkey_exists(self.cursor, 'trust_loan_delays')
         )
 
 
