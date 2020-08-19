@@ -19,7 +19,7 @@ class DownTest(unittest.TestCase):
 
     def test_trust_loan_delays_dne(self):
         self.assertFalse(
-            helper.check_if_table_exist('trust_loan_delays')
+            helper.check_if_table_exist(self.cursor, 'trust_loan_delays')
         )
 
 
