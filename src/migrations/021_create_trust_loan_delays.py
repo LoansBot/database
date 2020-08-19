@@ -7,7 +7,7 @@ def up(conn, cursor):
         '''
         CREATE TABLE trust_loan_delays(
             id SERIAL PRIMARY KEY,
-            user_id UNIQUE INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+            user_id INTEGER NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
             loans_completed_as_lender INTEGER NOT NULL,
             min_review_at TIMESTAMP NULL,
             created_at NOT NULL DEFAULT CURRENT_TIMESTAMP
