@@ -29,6 +29,7 @@ Referenced by:
     TABLE "trust_comments" CONSTRAINT "trust_comments_author_id_fkey" FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE SET NULL
     TABLE "trust_comments" CONSTRAINT "trust_comments_target_id_fkey" FOREIGN KEY (target_id) REFERENCES users(id) ON DELETE CASCADE
     TABLE "trust_events" CONSTRAINT "trust_events_mod_user_id_fkey" FOREIGN KEY (mod_user_id) REFERENCES users(id) ON DELETE SET NULL
+    TABLE "trust_loan_delays" CONSTRAINT "trust_loan_delays_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     TABLE "trusts" CONSTRAINT "trusts_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     TABLE "user_demographic_history" CONSTRAINT "user_demographic_history_changed_by_user_id_fkey" FOREIGN KEY (changed_by_user_id) REFERENCES users(id) ON DELETE SET NULL
     TABLE "user_demographic_lookups" CONSTRAINT "user_demographic_lookups_admin_user_id_fkey" FOREIGN KEY (admin_user_id) REFERENCES users(id) ON DELETE CASCADE
