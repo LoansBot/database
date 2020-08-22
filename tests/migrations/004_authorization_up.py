@@ -47,5 +47,6 @@ class UpTest(unittest.TestCase):
             helper.check_if_column_exist(self.cursor, 'users', 'password_digest')
         )
 
+
 if __name__ == '__main__':
     unittest.main()
