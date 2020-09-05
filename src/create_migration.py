@@ -24,6 +24,17 @@ def main(cl_args=None):
         raise Exception('Could not find the scaffolds directory')
 
     migration_nm = args.name[:-3] if args.name[-3:] == '.py' else args.name
+    if not migration_nm[:3].isdigit():
+        existing_migrations = os.listdir('migrations')
+        last_migration_num = 0
+        for migr in existing_migrations:
+            if not migr.endswith('.py') or not migr[:3].isdigit():
+                continue
+            migr_num = int(migr[:3])
+            if last_migration_num is None or last_migration_num < migr_num:
+                last_migration_num = migr_num
+        migration_nm = '{:03d}_{}'.format(int(last_migration_num) + 1, migration_nm)
+
     if os.path.exists(os.path.join('migrations', migration_nm + '.py')):
         raise Exception('That migration already exists')
 
