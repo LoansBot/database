@@ -139,7 +139,7 @@ def up(conn, cursor):
     cursor.execute(
         '''
         CREATE INDEX index_ep_alerts_on_user_endpoint_alert_sent_at
-            ON endpoint_users(user_id, endpoint_id, alert_type, sent_at)
+            ON endpoint_alerts(user_id, endpoint_id, alert_type, sent_at)
         '''
     )
     print(cursor.query.decode('utf-8'))
@@ -147,7 +147,7 @@ def up(conn, cursor):
     cursor.execute(
         '''
         CREATE INDEX index_ep_alerts_on_endpoint_user_alert_sent_at
-            ON endpoint_users (endpoint_id, user_id, alert_type, sent_at)
+            ON endpoint_alerts(endpoint_id, user_id, alert_type, sent_at)
         '''
     )
     print(cursor.query.decode('utf-8'))
