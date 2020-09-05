@@ -85,7 +85,7 @@ def up(conn, cursor):
         CREATE TABLE endpoint_users (
             id SERIAL PRIMARY KEY,
             endpoint_id INTEGER NOT NULL REFERENCES endpoints(id) ON DELETE CASCADE,
-            user_id INTEGER NULL DEFAULT NULL REFERENCES users(id) ON DELETE SET NULL,
+            user_id INTEGER NULL DEFAULT NULL REFERENCES users(id) ON DELETE CASCADE,
             ip_address TEXT NULL,
             user_agent TEXT NULL,
             response_type TEXT NOT NULL,
@@ -127,10 +127,7 @@ def up(conn, cursor):
             endpoint_id INTEGER NOT NULL REFERENCES endpoints(id) ON DELETE CASCADE,
             user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
             alert_type TEXT NOT NULL,
-            subject TEXT NOT NULL,
-            body TEXT NOT NULL,
-            sent_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+            sent_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         )
         '''
     )

@@ -19,6 +19,8 @@ Indexes:
 Referenced by:
     TABLE "authtokens" CONSTRAINT "authtokens_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     TABLE "claim_tokens" CONSTRAINT "claim_tokens_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    TABLE "endpoint_alerts" CONSTRAINT "endpoint_alerts_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    TABLE "endpoint_users" CONSTRAINT "endpoint_users_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
     TABLE "loan_admin_events" CONSTRAINT "loan_admin_events_admin_id_fkey" FOREIGN KEY (admin_id) REFERENCES users(id) ON DELETE SET NULL
     TABLE "loan_creation_infos" CONSTRAINT "loan_creation_infos_mod_user_id_fkey" FOREIGN KEY (mod_user_id) REFERENCES users(id) ON DELETE SET NULL
     TABLE "loans" CONSTRAINT "loans_borrower_id_fkey" FOREIGN KEY (borrower_id) REFERENCES users(id) ON DELETE CASCADE
