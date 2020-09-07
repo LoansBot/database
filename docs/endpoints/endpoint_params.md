@@ -26,6 +26,7 @@ Fields:
 - `added_date (date)`: When this parameter was added to the endpoint. We do not
   support parameter removal from an endpoint without going through a full
   endpoint sunsetting currently.
+- `updated_at (timestamp)`: When this row was last updated.
 
 ## Schema
 
