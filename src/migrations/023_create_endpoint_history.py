@@ -1,5 +1,5 @@
 """Creates the endpoint history tables. Not storing the history of tables is a
-recipe for disaster, even with backups. Furthmore if we do not store a history
+recipe for disaster, even with backups. Furthermore if we do not store a history
 we essentially can never grant access to people we only sort of trust. With
 these tables it's way easier for us to revert than for people to break things
 via the website.
@@ -17,7 +17,7 @@ usernames anyway, and user ids are faster.
 def up(conn, cursor):
     cursor.execute(
         '''
-        CREATE TABLE endpoints_history (
+        CREATE TABLE endpoint_history (
             id SERIAL PRIMARY KEY,
             user_id INTEGER NULL REFERENCES users(id) ON DELETE SET NULL,
             slug TEXT NOT NULL,
