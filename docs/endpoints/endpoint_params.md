@@ -31,17 +31,18 @@ Fields:
 ## Schema
 
 ```
-                                                       Table "public.endpoint_params"
-        Column        |  Type   | Collation | Nullable |                   Default                   | Storage  | Stats target | Description
-----------------------+---------+-----------+----------+---------------------------------------------+----------+--------------+-------------
- id                   | integer |           | not null | nextval('endpoint_params_id_seq'::regclass) | plain    |              |
- endpoint_id          | integer |           | not null |                                             | plain    |              |
- location             | text    |           | not null |                                             | extended |              |
- path                 | text    |           | not null |                                             | extended |              |
- name                 | text    |           | not null |                                             | extended |              |
- var_type             | text    |           | not null |                                             | extended |              |
- description_markdown | text    |           | not null |                                             | extended |              |
- added_date           | date    |           | not null | CURRENT_DATE                                | plain    |              |
+                                                                 Table "public.endpoint_params"
+        Column        |            Type             | Collation | Nullable |                   Default                   | Storage  | Stats target | Description
+----------------------+-----------------------------+-----------+----------+---------------------------------------------+----------+--------------+-------------
+ id                   | integer                     |           | not null | nextval('endpoint_params_id_seq'::regclass) | plain    |              |
+ endpoint_id          | integer                     |           | not null |                                             | plain    |              |
+ location             | text                        |           | not null |                                             | extended |              |
+ path                 | text                        |           | not null |                                             | extended |              |
+ name                 | text                        |           | not null |                                             | extended |              |
+ var_type             | text                        |           | not null |                                             | extended |              |
+ description_markdown | text                        |           | not null |                                             | extended |              |
+ added_date           | date                        |           | not null | CURRENT_DATE                                | plain    |              |
+ updated_at           | timestamp without time zone |           | not null | CURRENT_TIMESTAMP                           | plain    |              |
 Indexes:
     "endpoint_params_pkey" PRIMARY KEY, btree (id)
     "index_endpoint_params_on_ep_loc_path_name" UNIQUE, btree (endpoint_id, location, path, name)
