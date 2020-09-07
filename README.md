@@ -66,8 +66,8 @@ logic and one of which does.
 - Migrations should not raise errors on fresh installs
   - Run src/run_migrations.py and get no errors.
 - Each individual migration should have some basic up/down tests - i.e.,
-  if the migration creates a table then the up test should check it doesn't
-  exist and the down test should check it does and has the expected columns.
+  if the migration creates a table then the down test should check it doesn't
+  exist and the up test should check it does and has the expected columns.
   The test for before the migration is applied should fail after the migration
   is applied, and the test after the migration is applied should fail before
   the migration is applied.
