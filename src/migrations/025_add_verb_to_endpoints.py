@@ -20,8 +20,9 @@ def up(conn, cursor):
 
     cursor.execute(
         '''
-        CREATE UNIQUE INDEX index_endpoints_on_path_and_verb
-            ON endpoints(path, verb)
+        ALTER TABLE endpoints
+            ADD CONSTRAINT index_endpoints_on_path_and_verb
+            UNIQUE (path, verb)
         '''
     )
     print(cursor.query.decode('utf-8'))
@@ -30,7 +31,8 @@ def up(conn, cursor):
 def down(conn, cursor):
     cursor.execute(
         '''
-        DROP INDEX index_endpoints_on_path_and_verb
+        ALTER TABLE endpoints
+            DROP CONSTRAINT index_endpoints_on_path_and_verb
         '''
     )
     print(cursor.query.decode('utf-8'))
