@@ -47,8 +47,9 @@ def down(conn, cursor):
 
     cursor.execute(
         '''
-        CREATE UNIQUE INDEX endpoints_path_key
-            ON endpoints(path)
+        ALTER TABLE ENDPOINTS
+            ADD CONSTRAINT endpoints_path_key
+            UNIQUE (path)
         '''
     )
     print(cursor.query.decode('utf-8'))
