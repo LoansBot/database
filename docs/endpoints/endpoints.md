@@ -17,7 +17,9 @@ Fields:
 - `id (serial, primary key)`: The surrogate identifier for this row
 - `slug (text, unique)`: The identifier we use internally for this endpoint.
   This is hard-coded into the code when the row is added.
-- `path (text, unique)`: The path (e.g., `/api/users`) to this endpoint.
+- `path (text)`: The path (e.g., `/api/users`) to this endpoint.
+- `verb (text)`: The HTTP verb associated with this endpoint, uppercase (e.g.,
+  GET). The combination of path and verb is unique.
 - `description_markdown (text)`: The description of this endpoint, formatted in
   markdown. Although not absolutely required, we do send this via reddit so it's
   best if it uses the subset of markdown that reddit handles.
@@ -49,10 +51,11 @@ Fields:
  sunsets_on                  | date                        |           |          |                                       | plain    |              |
  created_at                  | timestamp without time zone |           | not null | CURRENT_TIMESTAMP                     | plain    |              |
  updated_at                  | timestamp without time zone |           | not null | CURRENT_TIMESTAMP                     | plain    |              |
+ verb                        | text                        |           | not null | 'GET'::text                           | extended |              |
 Indexes:
     "endpoints_pkey" PRIMARY KEY, btree (id)
-    "endpoints_path_key" UNIQUE CONSTRAINT, btree (path)
     "endpoints_slug_key" UNIQUE CONSTRAINT, btree (slug)
+    "index_endpoints_on_path_and_verb" UNIQUE CONSTRAINT, btree (path, verb)
 Referenced by:
     TABLE "endpoint_alerts" CONSTRAINT "endpoint_alerts_endpoint_id_fkey" FOREIGN KEY (endpoint_id) REFERENCES endpoints(id) ON DELETE CASCADE
     TABLE "endpoint_alternatives" CONSTRAINT "endpoint_alternatives_new_endpoint_id_fkey" FOREIGN KEY (new_endpoint_id) REFERENCES endpoints(id) ON DELETE CASCADE
