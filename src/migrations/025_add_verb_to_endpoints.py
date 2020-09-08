@@ -4,15 +4,7 @@
 def up(conn, cursor):
     cursor.execute(
         '''
-        ALTER TABLE endpoints
-            DROP CONSTRAINT endpoints_path_key RESTRICT
-        '''
-    )
-    print(cursor.query.decode('utf-8'))
-
-    cursor.execute(
-        '''
-        DROP INDEX endpoints_path_key RESTRICT
+        DROP INDEX endpoints_path_key CASCADE
         '''
     )
     print(cursor.query.decode('utf-8'))
