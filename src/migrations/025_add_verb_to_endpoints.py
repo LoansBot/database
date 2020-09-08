@@ -30,8 +30,7 @@ def up(conn, cursor):
 def down(conn, cursor):
     cursor.execute(
         '''
-        ALTER TABLE endpoints
-            DROP CONSTRAINT index_endpoints_on_path_and_verb
+        DROP INDEX index_endpoints_on_path_and_verb
         '''
     )
     print(cursor.query.decode('utf-8'))
