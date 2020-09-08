@@ -25,7 +25,9 @@ endpoints changes. This includes creation and deletion.
  old_in_endpoints                | boolean                     |           | not null |                                              | plain    |              |
  new_in_endpoints                | boolean                     |           | not null |                                              | plain    |              |
  created_at                      | timestamp without time zone |           | not null | CURRENT_TIMESTAMP                            | plain    |              |
- Indexes:
+ old_verb                        | text                        |           |          |                                              | extended |              |
+ new_verb                        | text                        |           | not null |                                              | extended |              |
+Indexes:
     "endpoint_history_pkey" PRIMARY KEY, btree (id)
     "index_endpoint_history_on_created_at" btree (created_at)
     "index_endpoint_history_on_endpoint_slug_and_created_at" btree (slug, created_at)
