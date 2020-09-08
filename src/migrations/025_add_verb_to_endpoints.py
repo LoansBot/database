@@ -4,7 +4,7 @@
 def up(conn, cursor):
     cursor.execute(
         '''
-        DROP INDEX endpoints_path_key CASCADE
+        DROP INDEX endpoints_path_key
         '''
     )
     print(cursor.query.decode('utf-8'))
@@ -29,7 +29,7 @@ def up(conn, cursor):
 def down(conn, cursor):
     cursor.execute(
         '''
-        DROP INDEX index_endpoints_on_path_and_verb RESTRICT
+        DROP INDEX index_endpoints_on_path_and_verb
         '''
     )
     print(cursor.query.decode('utf-8'))
