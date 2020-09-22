@@ -29,6 +29,11 @@ happen:
 Our trust status is used as one data point amongst many that borrowers use, and
 lenders in good standing will often prominently state it.
 
+The following is our guideline for trust statuses:
+
+- Good: There is a preponderance of evidence to suggest this lender is operating with good intention within the community
+- Bad: There is either clear and convincing evidence to suggest this lender is operating with bad intention within the community, or there is a preponderance of evidence this lender is operating with bad intention within the subreddit.
+
 ## Schema
 
 ```
