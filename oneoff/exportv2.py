@@ -95,8 +95,11 @@ def write_users(conn, cursor, out):
         .get_sql()
     )
 
+    fmt = '{{"id":{},"username":"{}","created_at":{},"updated_at":{}}}\n'
     last_user_id = None
     row = cursor.fetchone()
+    print('first row:')
+    print(fmt.format(*row))
     out('"users"\n')
     with tqdm(total=cnt_rows) as pbar:
         while row is not None:
@@ -105,13 +108,51 @@ def write_users(conn, cursor, out):
                 row = cursor.fetchone()
                 continue
             last_user_id = row[0]
-            out('{{"id":{},"username":"{}","created_at":{},"updated_at":{}}}\n'.format(*row))
+            out(fmt.format(*row))
             pbar.update(1)
             row = cursor.fetchone()
 
 
 def write_loans(conn, cursor, out):
-    pass
+    loans = Table('loans')
+    cursor.execute(
+        Query.from_(loans)
+        .select(Count(Star()))
+        .get_sql()
+    )
+    (cnt_rows,) = cursor.fetchone()
+
+    cursor.execute(
+        Query.from_(loans)
+        .select(
+            loans.id,
+            loans.lender_id,
+            loans.borrower_id,
+            loans.principal_cents,
+            loans.principal_repayment_cents,
+            loans.unpaid,
+            loans.deleted,
+            loans.deleted_reason,
+            loans.created_at,
+            loans.updated_at,
+            loans.deleted_at
+        )
+        .get_sql()
+    )
+
+    fmt = (
+        '{{"id":{},"lender_id":{},"borrower_id":{},"principal_cents":{},"principal_repayment_cents":{}'
+        '"unpaid":{},"deleted":{},"deleted_reason":{},"created_at":{},"updated_at":{},"deleted_at":{}}}\n'
+    )
+
+    row = cursor.fetchone()
+    print('first row:')
+    print(fmt.format(*row))
+    with tqdm(total=cnt_rows):
+        while row is not None:
+            out(fmt.format(*row))
+            tqdm.update(1)
+            row = cursor.fetchone()
 
 
 def write_creation_infos(conn, cursor, out):
