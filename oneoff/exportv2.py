@@ -172,7 +172,7 @@ def write_creation_infos(conn, cursor, out):
         .select(Count(Star()))
         .get_sql()
     )
-    (rows_cnt,) = cursor.fetchone()
+    (cnt_rows,) = cursor.fetchone()
 
     cursor.execute(
         Query.from_(cinfos)
@@ -195,7 +195,7 @@ def write_creation_infos(conn, cursor, out):
     print(fmt.format(*row))
     out('"creation_infos"\n')
     out(f'{cnt_rows}\n')
-    with tqdm(total=rows_cnt) as pbar:
+    with tqdm(total=cnt_rows) as pbar:
         while row is not None:
             out(fmt.format(*row))
             pbar.update(1)
