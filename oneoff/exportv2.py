@@ -52,15 +52,23 @@ def main():
         def out(sr: str):
             outfile.write(compr.process(sr.encode('utf-8')))
 
+        print('Writing users...')
         write_users(conn, cursor, out)
+        print('Writing loans...')
         write_loans(conn, cursor, out)
+        print('Writing creation infos...')
         write_creation_infos(conn, cursor, out)
+        print('Writing repayments...')
         write_repayments(conn, cursor, out)
+        print('Writing fullnames...')
         write_fullnames(conn, cursor, out)
+        print('Writing trusts...')
         write_trusts(conn, cursor, out)
 
+        print('Flushing...')
         outfile.write(compr.flush())
 
+    print('All done')
 
 
 def write_users(conn, cursor, out):
