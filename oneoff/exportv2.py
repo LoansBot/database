@@ -200,7 +200,34 @@ def write_creation_infos(conn, cursor, out):
 
 
 def write_repayments(conn, cursor, out):
-    pass
+    repayments = Table('repayments')
+    cursor.execute(
+        Query.from_(repayments)
+        .select(Count(Star()))
+        .get_sql()
+    )
+    (rows_cnt,) = cursor.fetchone()
+
+    cursor.execute(
+        Query.from_(repayments)
+        .select(
+            repayments.loan_id,
+            repayments.amount_cents,
+            Function('UNIX_TIMESTAMP', repayments.created_at)
+        )
+        .get_sql()
+    )
+    fmt = '{{"loan_id":{},"amount_cents":{},"created_at":{}}}\n'
+    row = cursor.fetchone()
+    print('first row:')
+    print(fmt.format(*row))
+
+    out('"repayments"\n')
+    with tqdm(total=rows_cnt) as pbar:
+        while row is not None:
+            out(fmt.format(*row))
+            pbar.update(1)
+            row = cursor.fetchone()
 
 
 def write_fullnames(conn, cursor, out):
