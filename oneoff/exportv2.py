@@ -30,8 +30,8 @@ string
 object with keys ["user_id", "status", "reason"] (status="unknown" if Vetting required, else "bad")
 """
 import mysql.connector
-from pypika import MySQLQuery as Query, Table, Parameter, Order
-from pypika.functions import Function, Count
+from pypika import MySQLQuery as Query, Table, Order, Case
+from pypika.functions import Function, Count, Coalesce, Cast
 from pypika.terms import Star
 import brotli
 import os
@@ -49,6 +49,7 @@ def main():
 
     with open('export.json.brotli', 'wb') as outfile:
         compr = brotli.Compressor(mode=brotli.MODE_TEXT, quality=11)
+
         def out(sr: str):
             outfile.write(compr.process(sr.encode('utf-8')))
 
@@ -130,19 +131,25 @@ def write_loans(conn, cursor, out):
             loans.borrower_id,
             loans.principal_cents,
             loans.principal_repayment_cents,
-            loans.unpaid,
-            loans.deleted,
-            loans.deleted_reason,
+            Case()
+            .when(loans.unpaid.eq(True), 'true')
+            .else_('false'),
+            Case()
+            .when(loans.deleted.eq(True), 'true')
+            .else_('false'),
+            Coalesce(loans.deleted_reason, ''),
             Function('UNIX_TIMESTAMP', loans.created_at),
             Function('UNIX_TIMESTAMP', loans.updated_at),
-            Function('UNIX_TIMESTAMP', loans.deleted_at)
+            Case()
+            .when(loans.deleted_at.isnull(), 'null')
+            .else_(Cast(Function('UNIX_TIMESTAMP', loans.deleted_at), 'text'))
         )
         .get_sql()
     )
 
     fmt = (
         '{{"id":{},"lender_id":{},"borrower_id":{},"principal_cents":{},"principal_repayment_cents":{}'
-        '"unpaid":{},"deleted":{},"deleted_reason":{},"created_at":{},"updated_at":{},"deleted_at":{}}}\n'
+        '"unpaid":{},"deleted":{},"deleted_reason":"{}","created_at":{},"updated_at":{},"deleted_at":{}}}\n'
     )
 
     row = cursor.fetchone()
