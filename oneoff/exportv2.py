@@ -31,7 +31,8 @@ object with keys ["user_id", "status", "reason"] (status="unknown" if Vetting re
 """
 import mysql.connector
 from pypika import MySQLQuery as Query, Table, Parameter, Order
-from pypika.functions import Function
+from pypika.functions import Function, Count
+from pypika.terms import Star
 import brotli
 import os
 
@@ -46,7 +47,7 @@ def main():
     cursor = conn.cursor()
 
     with open('export.json.brotli', 'wb') as outfile:
-        compr = brotli.Compressor(mode=brotli.MODE_TEXT, quality=6)
+        compr = brotli.Compressor(mode=brotli.MODE_TEXT, quality=11)
         def out(sr: str):
             outfile.write(compr.process(sr.encode('utf-8')))
 
@@ -67,6 +68,14 @@ def write_users(conn, cursor, out):
     cursor.execute(
         Query.from_(usernames)
         .join(users).on(users.id == usernames.user_id)
+        .select(Count(Star()))
+        .get_sql()
+    )
+    (cnt_rows,) = cursor.fetchone()
+
+    cursor.execute(
+        Query.from_(usernames)
+        .join(users).on(users.id == usernames.user_id)
         .orderby(users.id, order=Order.asc)
         .select(
             users.id,
@@ -80,12 +89,16 @@ def write_users(conn, cursor, out):
     last_user_id = None
     row = cursor.fetchone()
     out('"users"\n')
-    while row is not None:
-        if row[0] == last_user_id:
-            continue
-        last_user_id = row[0]
-        out('{{"id":{},"username":"{}","created_at":{},"updated_at":{}}}\n'.format(*row))
-        row = cursor.fetchone()
+    with tqdm(total=cnt_rows) as pbar:
+        while row is not None:
+            if row[0] == last_user_id:
+                pbar.update(1)
+                row = cursor.fetchone()
+                continue
+            last_user_id = row[0]
+            out('{{"id":{},"username":"{}","created_at":{},"updated_at":{}}}\n'.format(*row))
+            pbar.update(1)
+            row = cursor.fetchone()
 
 
 def write_loans(conn, cursor, out):
