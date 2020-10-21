@@ -155,6 +155,7 @@ def write_loans(conn, cursor, out):
     row = cursor.fetchone()
     print('first row:')
     print(fmt.format(*row))
+    out('"loans"\n')
     with tqdm(total=cnt_rows) as pbar:
         while row is not None:
             out(fmt.format(*row))
@@ -184,11 +185,11 @@ def write_creation_infos(conn, cursor, out):
         .get_sql()
     )
 
-    fmt = '{{"loan_id":{},"type":"{}","thread":{},"user_id":{}}}'
+    fmt = '{{"loan_id":{},"type":"{}","thread":{},"user_id":{}}}\n'
     row = cursor.fetchone()
     print('first row:')
     print(fmt.format(*row))
-
+    out('"creation_infos"\n')
     with tqdm(total=cnt_rows) as pbar:
         while row is not None:
             out(fmt.format(*row))
