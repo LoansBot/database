@@ -84,7 +84,7 @@ def write_users(conn, cursor, out):
         if row[0] == last_user_id:
             continue
         last_user_id = row[0]
-        out('{"id":{},"username":"{}","created_at":{},"updated_at":{}}\n'.format(*row))
+        out('{{"id":{},"username":"{}","created_at":{},"updated_at":{}}}\n'.format(*row))
         row = cursor.fetchone()
 
 
