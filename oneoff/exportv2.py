@@ -133,9 +133,9 @@ def write_loans(conn, cursor, out):
             loans.unpaid,
             loans.deleted,
             loans.deleted_reason,
-            loans.created_at,
-            loans.updated_at,
-            loans.deleted_at
+            Function('UNIX_TIMESTAMP', loans.created_at),
+            Function('UNIX_TIMESTAMP', loans.updated_at),
+            Function('UNIX_TIMESTAMP', loans.deleted_at)
         )
         .get_sql()
     )
@@ -148,10 +148,10 @@ def write_loans(conn, cursor, out):
     row = cursor.fetchone()
     print('first row:')
     print(fmt.format(*row))
-    with tqdm(total=cnt_rows):
+    with tqdm(total=cnt_rows) as pbar:
         while row is not None:
             out(fmt.format(*row))
-            tqdm.update(1)
+            pbar.update(1)
             row = cursor.fetchone()
 
 
