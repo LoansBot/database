@@ -190,7 +190,7 @@ def write_creation_infos(conn, cursor, out):
     print('first row:')
     print(fmt.format(*row))
     out('"creation_infos"\n')
-    with tqdm(total=cnt_rows) as pbar:
+    with tqdm(total=rows_cnt) as pbar:
         while row is not None:
             out(fmt.format(*row))
             pbar.update(1)
