@@ -102,6 +102,7 @@ def write_users(conn, cursor, out):
     print('first row:')
     print(fmt.format(*row))
     out('"users"\n')
+    out(f'{cnt_rows}\n')
     with tqdm(total=cnt_rows) as pbar:
         while row is not None:
             if row[0] == last_user_id:
@@ -156,6 +157,7 @@ def write_loans(conn, cursor, out):
     print('first row:')
     print(fmt.format(*row))
     out('"loans"\n')
+    out(f'{cnt_rows}\n')
     with tqdm(total=cnt_rows) as pbar:
         while row is not None:
             out(fmt.format(*row))
@@ -192,6 +194,7 @@ def write_creation_infos(conn, cursor, out):
     print('first row:')
     print(fmt.format(*row))
     out('"creation_infos"\n')
+    out(f'{cnt_rows}\n')
     with tqdm(total=rows_cnt) as pbar:
         while row is not None:
             out(fmt.format(*row))
@@ -206,7 +209,7 @@ def write_repayments(conn, cursor, out):
         .select(Count(Star()))
         .get_sql()
     )
-    (rows_cnt,) = cursor.fetchone()
+    (cnt_rows,) = cursor.fetchone()
 
     cursor.execute(
         Query.from_(repayments)
@@ -223,7 +226,8 @@ def write_repayments(conn, cursor, out):
     print(fmt.format(*row))
 
     out('"repayments"\n')
-    with tqdm(total=rows_cnt) as pbar:
+    out(f'{cnt_rows}\n')
+    with tqdm(total=cnt_rows) as pbar:
         while row is not None:
             out(fmt.format(*row))
             pbar.update(1)
@@ -231,7 +235,32 @@ def write_repayments(conn, cursor, out):
 
 
 def write_fullnames(conn, cursor, out):
-    pass
+    fullnames = Table('fullnames')
+    cursor.execute(
+        Query.from_(fullnames)
+        .select(Count(Star()))
+        .get_sql()
+    )
+    (cnt_rows,) = cursor.fetchone()
+
+    cursor.execute(
+        Query.from_(fullnames)
+        .select(fullnames.fullname)
+        .get_sql()
+    )
+
+    fmt = '"{}"\n'
+    row = cursor.fetchone()
+    print('first row:')
+    print(fmt.format(*row))
+
+    out("fullnames")
+    out(f'{cnt_rows}\n')
+    with tqdm(total=cnt_rows) as pbar:
+        while row is not None:
+            out(fmt.format(*row))
+            pbar.update(1)
+            row = cursor.fetchone()
 
 
 def write_trusts(conn, cursor, out):
