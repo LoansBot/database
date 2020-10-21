@@ -35,7 +35,7 @@ from pypika.functions import Function, Count
 from pypika.terms import Star
 import brotli
 import os
-import tqdm
+from tqdm import tqdm
 
 
 def main():
