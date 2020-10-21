@@ -142,7 +142,7 @@ def write_loans(conn, cursor, out):
             Function('UNIX_TIMESTAMP', loans.updated_at),
             Case()
             .when(loans.deleted_at.isnull(), 'null')
-            .else_(Cast(Function('UNIX_TIMESTAMP', loans.deleted_at), 'text'))
+            .else_(Cast(Function('UNIX_TIMESTAMP', loans.deleted_at), 'char'))
         )
         .get_sql()
     )
