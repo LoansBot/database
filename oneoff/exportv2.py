@@ -45,8 +45,8 @@ def main():
     )
     cursor = conn.cursor()
 
-    with open('export.json', 'wb') as outfile:
-        compr = brotli.Compressor(brotli.MODE_TEXT)
+    with open('export.json.brotli', 'wb') as outfile:
+        compr = brotli.Compressor(mode=brotli.MODE_TEXT, quality=6)
         def out(sr: str):
             outfile.write(compr.process(sr.encode('utf-8')))
 
