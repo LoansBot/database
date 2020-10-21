@@ -40,21 +40,22 @@ def main():
     conn = mysql.connector.connect(
         host='localhost',
         user=os.environ.get('MYSQL_USER'),
-        password=os.environ.get('MYSQL_PASS')
+        password=os.environ.get('MYSQL_PASS'),
+        database='loans'
     )
-    cursor = mydb.cursor()
+    cursor = conn.cursor()
 
     with open('export.json', 'wb') as outfile:
         compr = brotli.Compressor(brotli.MODE_TEXT)
         def out(sr: str):
             outfile.write(compr.process(sr.encode('utf-8')))
 
-        write_users(conn, cursor, compr)
-        write_loans(conn, cursor, compr)
-        write_creation_infos(conn, cursor, compr)
-        write_repayments(conn, cursor, compr)
-        write_fullnames(conn, cursor, compr)
-        write_trusts(conn, cursor, compr)
+        write_users(conn, cursor, out)
+        write_loans(conn, cursor, out)
+        write_creation_infos(conn, cursor, out)
+        write_repayments(conn, cursor, out)
+        write_fullnames(conn, cursor, out)
+        write_trusts(conn, cursor, out)
 
         outfile.write(compr.flush())
 
