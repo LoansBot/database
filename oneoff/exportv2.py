@@ -180,7 +180,7 @@ def write_creation_infos(conn, cursor, out):
             Case()
             .when(cinfos.thread.isnull(), 'null')
             .else_(Concat('"', cinfos.thread, '"')),
-            cinfo.user_id
+            cinfos.user_id
         )
         .get_sql()
     )
