@@ -31,7 +31,7 @@ object with keys ["user_id", "status", "reason"] (status="unknown" if Vetting re
 """
 import mysql.connector
 from pypika import MySQLQuery as Query, Table, Order, Case
-from pypika.functions import Function, Count, Coalesce, Cast
+from pypika.functions import Function, Count, Coalesce, Cast, Concat
 from pypika.terms import Star
 import brotli
 import os
@@ -163,7 +163,37 @@ def write_loans(conn, cursor, out):
 
 
 def write_creation_infos(conn, cursor, out):
-    pass
+    cinfos = Table('creation_infos')
+    cursor.execute(
+        Query.from_(cinfos)
+        .select(Count(Star()))
+        .get_sql()
+    )
+    (rows_cnt,) = cursor.fetchone()
+
+    cursor.execute(
+        Query.from_(cinfos)
+        .select(
+            cinfos.loan_id,
+            cinfos.type,
+            Case()
+            .when(cinfos.thread.isnull(), 'null')
+            .else_(Concat('"', cinfos.thread, '"')),
+            cinfo.user_id
+        )
+        .get_sql()
+    )
+
+    fmt = '{{"loan_id":{},"type":"{}","thread":{},"user_id":{}}}'
+    row = cursor.fetchone()
+    print('first row:')
+    print(fmt.format(*row))
+
+    with tqdm(total=cnt_rows) as pbar:
+        while row is not None:
+            out(fmt.format(*row))
+            pbar.update(1)
+            row = cursor.fetchone()
 
 
 def write_repayments(conn, cursor, out):
