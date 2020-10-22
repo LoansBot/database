@@ -264,7 +264,7 @@ def write_fullnames(conn, cursor, out):
 
 
 def write_trusts(conn, cursor, out):
-    promo_blacklists = Table('promotion_blacklist_users')
+    promo_blacklists = Table('promo_blacklist_users')
     cursor.execute(
         Query.from_(promo_blacklists)
         .select(Count(Star()))
