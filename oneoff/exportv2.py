@@ -27,7 +27,7 @@ object with keys ["loan_id", "amount_cents", "created_at"]
 string
 "trusts"
 (number of promo blacklist users)
-object with keys ["user_id", "status", "reason"] (status="unknown" if Vetting required, else "bad")
+object with keys ["user_id", "reason", "added_at"] (skipped if the reason is Vetting required)
 """
 import mysql.connector
 from pypika import MySQLQuery as Query, Table, Order, Case
@@ -254,7 +254,7 @@ def write_fullnames(conn, cursor, out):
     print('first row:')
     print(fmt.format(*row))
 
-    out("fullnames")
+    out("fullnames\n")
     out(f'{cnt_rows}\n')
     with tqdm(total=cnt_rows) as pbar:
         while row is not None:
@@ -264,7 +264,39 @@ def write_fullnames(conn, cursor, out):
 
 
 def write_trusts(conn, cursor, out):
-    pass
+    promo_blacklists = Table('promotion_blacklists')
+    cursor.execute(
+        Query.from_(promo_blacklists)
+        .select(Count(Star()))
+        .where(promo_blacklists.reason != 'Vetting required')
+        .where(promo_blacklists.removed_at.isnull())
+        .get_sql()
+    )
+    (cnt_rows,) = cursor.fetchone()
+    cursor.execute(
+        Query.from_(promo_blacklists)
+        .select(
+            promo_blacklists.user_id,
+            Function("REPLACE", promo_blacklists.reason, '"', '\\"'),
+            Function('UNIX_TIMESTAMP', promo_blacklists.added_at)
+        )
+        .where(promo_blacklists.reason != 'Vetting required')
+        .where(promo_blacklists.removed_at.isnull())
+        .get_sql()
+    )
+    fmt = '{{"user_id":{},"reason":"{}","added_at":{}}}\n'
+    row = cursor.fetchone()
+    print('first row:')
+    print(fmt.format(*row))
+
+    out("trusts\n")
+    out(f'{cnt_rows}\n')
+    with tqdm(total=cnt_rows) as pbar:
+        while row is not None:
+            out(fmt.format(*row))
+            pbar.update(1)
+            row = cursor.fetchone()
+
 
 
 if __name__ == '__main__':
