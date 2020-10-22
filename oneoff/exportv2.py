@@ -254,7 +254,7 @@ def write_fullnames(conn, cursor, out):
     print('first row:')
     print(fmt.format(*row))
 
-    out("fullnames\n")
+    out('"fullnames"\n')
     out(f'{cnt_rows}\n')
     with tqdm(total=cnt_rows) as pbar:
         while row is not None:
@@ -289,7 +289,7 @@ def write_trusts(conn, cursor, out):
     print('first row:')
     print(fmt.format(*row))
 
-    out("trusts\n")
+    out('"trusts"\n')
     out(f'{cnt_rows}\n')
     with tqdm(total=cnt_rows) as pbar:
         while row is not None:
