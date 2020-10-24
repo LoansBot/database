@@ -30,7 +30,7 @@ string
 object with keys ["user_id", "reason", "added_at"] (skipped if the reason is Vetting required)
 """
 import mysql.connector
-from pypika import MySQLQuery as Query, Table, Order, Case
+from pypika import MySQLQuery as Query, Table, Order, Case, Parameter
 from pypika.functions import Function, Count, Coalesce, Cast, Concat
 from pypika.terms import Star
 import brotli
@@ -89,7 +89,11 @@ def write_users(conn, cursor, out):
         .orderby(users.id, order=Order.asc)
         .select(
             users.id,
-            Function('REPLACE', Function('REPLACE', usernames.username, '%s', '%s'), '%s', '%s'),
+            Function(
+                'REPLACE',
+                Function('REPLACE', usernames.username, Parameter('%s'), Parameter('%s')),
+                Parameter('%s'), Parameter('%s')
+            ),
             Function('UNIX_TIMESTAMP', users.created_at),
             Function('UNIX_TIMESTAMP', users.updated_at)
         )
