@@ -117,11 +117,13 @@ def write_users(conn, cursor, out):
                 row = cursor.fetchone()
                 continue
 
-            cnt = 0
-            og_row = row[1]
-            while row[1] in seen_usernames:
-                cnt += 1
-                row[1] = og_row + f'_(dup-{cnt})'
+            if row[1] in seen_usernames:
+                row = list(row)
+                cnt = 0
+                og_row = row[1]
+                while row[1] in seen_usernames:
+                    cnt += 1
+                    row[1] = og_row + f'_(dup-{cnt})'
 
             seen_usernames.add(row[1])
             last_user_id = row[0]
