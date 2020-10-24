@@ -82,30 +82,29 @@ def write_users(conn, cursor, out):
     )
     (cnt_rows,) = cursor.fetchone()
 
-    sql = (
-        Query.from_(usernames)
-        .join(users).on(users.id == usernames.user_id)
-        .orderby(users.id, order=Order.asc)
-        .select(
-            users.id,
-            Function(
-                'REPLACE',
-                Function('REPLACE', usernames.username, Parameter('%s'), Parameter('%s')),
-                Parameter('%s'), Parameter('%s')
-            ),
-            Function('UNIX_TIMESTAMP', users.created_at),
-            Function('UNIX_TIMESTAMP', users.updated_at)
-        )
-        .get_sql()
-    )
-    print(sql)
     cursor.execute(
-        sql,
+        (
+            Query.from_(usernames)
+            .join(users).on(users.id == usernames.user_id)
+            .orderby(users.id, order=Order.asc)
+            .select(
+                users.id,
+                Function(
+                    'REPLACE',
+                    Function('REPLACE', usernames.username, Parameter('%s'), Parameter('%s')),
+                    Parameter('%s'), Parameter('%s')
+                ),
+                Function('UNIX_TIMESTAMP', users.created_at),
+                Function('UNIX_TIMESTAMP', users.updated_at)
+            )
+            .get_sql()
+        ),
         ('\\', '\\\\', '"', '\\"')
     )
 
     fmt = '{{"id":{},"username":"{}","created_at":{},"updated_at":{}}}\n'
     last_user_id = None
+    seen_usernames = set()
     row = cursor.fetchone()
     print('first row:')
     print(fmt.format(*row))
@@ -117,6 +116,14 @@ def write_users(conn, cursor, out):
                 pbar.update(1)
                 row = cursor.fetchone()
                 continue
+
+            cnt = 0
+            og_row = row[1]
+            while row[1] in seen_usernames:
+                cnt += 1
+                row[1] = og_row + f'_(dup-{cnt})'
+
+            seen_usernames.add(row[1])
             last_user_id = row[0]
             out(fmt.format(*row))
             pbar.update(1)
