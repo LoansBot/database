@@ -83,7 +83,7 @@ def write_users(conn, cursor, out):
     )
     (cnt_rows,) = cursor.fetchone()
 
-    cursor.execute(
+    sql = (
         Query.from_(usernames)
         .join(users).on(users.id == usernames.user_id)
         .orderby(users.id, order=Order.asc)
@@ -93,7 +93,11 @@ def write_users(conn, cursor, out):
             Function('UNIX_TIMESTAMP', users.created_at),
             Function('UNIX_TIMESTAMP', users.updated_at)
         )
-        .get_sql(),
+        .get_sql()
+    )
+    print(sql)
+    cursor.execute(
+        sql,
         ('\\', '\\\\', '"', '\\"')
     )
 
