@@ -89,11 +89,12 @@ def write_users(conn, cursor, out):
         .orderby(users.id, order=Order.asc)
         .select(
             users.id,
-            Function('REPLACE', Function('REPLACE', usernames.username, '\\', '\\\\'), '"', '\"'),
+            Function('REPLACE', Function('REPLACE', usernames.username, '%s', '%s'), '%s', '%s'),
             Function('UNIX_TIMESTAMP', users.created_at),
             Function('UNIX_TIMESTAMP', users.updated_at)
         )
-        .get_sql()
+        .get_sql(),
+        ('\\', '\\\\', '"', '\\"')
     )
 
     fmt = '{{"id":{},"username":"{}","created_at":{},"updated_at":{}}}\n'
