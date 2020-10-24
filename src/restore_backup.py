@@ -5,6 +5,7 @@ import argparse
 import os
 import sys
 import settings
+import subprocess
 
 
 def main(args=None):
@@ -43,7 +44,9 @@ def restore_database(local_file):
 
     old_pg_pass = os.environ.get('PGPASSWORD')
     os.environ['PGPASSWORD'] = db_pass
-    print(f'Initiating restore from {local_file}')
+
+    pg_restore_version = subprocess.check_output('pg_restore --version', shell=True)
+    print(f'Initiating restore from {local_file} using {pg_restore_version}')
     status = os.system(f'pg_restore -Fc --clean --create --dbname template1 {auth_str} {local_file}')
     if old_pg_pass is not None:
         os.environ['PGPASSWORD'] = old_pg_pass
