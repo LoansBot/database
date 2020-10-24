@@ -8,6 +8,7 @@ import aws_utils
 import json
 import settings
 import sys
+import subprocess
 
 
 REQUIRED_CFG = [
@@ -49,7 +50,8 @@ def backup_database(local_file):
     db_pass = cfg['DATABASE_PASSWORD']
     db_name = cfg['DATABASE_DBNAME']
 
-    print(f'Initiating database backup to {local_file}')
+    pg_dump_version = subprocess.check_output('pg_dump --version', shell=True)
+    print(f'Initiating database backup to {local_file} using {pg_dump_version}')
     old_pg_pass = os.environ.get('PGPASSWORD')
     os.environ['PGPASSWORD'] = db_pass
     status = os.system(
