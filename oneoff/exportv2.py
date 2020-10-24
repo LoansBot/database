@@ -77,8 +77,7 @@ def write_users(conn, cursor, out):
     users = Table('users')
     cursor.execute(
         Query.from_(usernames)
-        .join(users).on(users.id == usernames.user_id)
-        .select(Count(Star()))
+        .select(Count(usernames.user_id).distinct())
         .get_sql()
     )
     (cnt_rows,) = cursor.fetchone()
@@ -158,7 +157,7 @@ def write_loans(conn, cursor, out):
     )
 
     fmt = (
-        '{{"id":{},"lender_id":{},"borrower_id":{},"principal_cents":{},"principal_repayment_cents":{}'
+        '{{"id":{},"lender_id":{},"borrower_id":{},"principal_cents":{},"principal_repayment_cents":{},'
         '"unpaid":{},"deleted":{},"deleted_reason":"{}","created_at":{},"updated_at":{},"deleted_at":{}}}\n'
     )
 
