@@ -1,7 +1,6 @@
 import brotli
 import io
 import json
-import sys
 import os.path
 import psycopg2
 import re

@@ -315,6 +315,5 @@ def write_trusts(conn, cursor, out):
             row = cursor.fetchone()
 
 
-
 if __name__ == '__main__':
     main()
