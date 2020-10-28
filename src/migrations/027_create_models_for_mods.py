@@ -17,7 +17,7 @@ def up(conn, cursor):
         '''
         CREATE TABLE mod_onboarding_messages (
             id SERIAL PRIMARY KEY,
-            order INTEGER UNIQUE NOT NULL,
+            msg_order INTEGER UNIQUE NOT NULL,
             title_id INTEGER NOT NULL REFERENCES responses(id) ON DELETE CASCADE,
             body_id INTEGER NOT NULL REFERENCES responses(id) ON DELETE CASCADE
         )
