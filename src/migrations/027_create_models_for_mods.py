@@ -30,7 +30,7 @@ def up(conn, cursor):
         CREATE TABLE mod_onboarding_progress (
             id SERIAL PRIMARY KEY,
             moderator_id INTEGER UNIQUE NOT NULL REFERENCES moderators(id) ON DELETE CASCADE,
-            order INTEGER NOT NULL,
+            msg_order INTEGER NOT NULL,
             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         )
