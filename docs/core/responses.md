@@ -25,6 +25,8 @@ Indexes:
 Referenced by:
     TABLE "mod_onboarding_messages" CONSTRAINT "mod_onboarding_messages_body_id_fkey" FOREIGN KEY (body_id) REFERENCES responses(id) ON DELETE CASCADE
     TABLE "mod_onboarding_messages" CONSTRAINT "mod_onboarding_messages_title_id_fkey" FOREIGN KEY (title_id) REFERENCES responses(id) ON DELETE CASCADE
+    TABLE "mod_onboarding_msg_history" CONSTRAINT "mod_onboarding_msg_history_body_response_id_fkey" FOREIGN KEY (body_response_id) REFERENCES responses(id) ON DELETE SET NULL
+    TABLE "mod_onboarding_msg_history" CONSTRAINT "mod_onboarding_msg_history_title_response_id_fkey" FOREIGN KEY (title_response_id) REFERENCES responses(id) ON DELETE SET NULL
     TABLE "response_histories" CONSTRAINT "response_histories_response_id_fkey" FOREIGN KEY (response_id) REFERENCES responses(id) ON DELETE CASCADE
 Access method: heap
 ```
