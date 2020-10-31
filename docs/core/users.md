@@ -25,6 +25,7 @@ Referenced by:
     TABLE "loan_creation_infos" CONSTRAINT "loan_creation_infos_mod_user_id_fkey" FOREIGN KEY (mod_user_id) REFERENCES users(id) ON DELETE SET NULL
     TABLE "loans" CONSTRAINT "loans_borrower_id_fkey" FOREIGN KEY (borrower_id) REFERENCES users(id) ON DELETE CASCADE
     TABLE "loans" CONSTRAINT "loans_lender_id_fkey" FOREIGN KEY (lender_id) REFERENCES users(id) ON DELETE CASCADE
+    TABLE "mod_onboarding_msg_history" CONSTRAINT "mod_onboarding_msg_history_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     TABLE "moderators" CONSTRAINT "moderators_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     TABLE "password_authentication_events" CONSTRAINT "password_authentication_events_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
     TABLE "password_authentications" CONSTRAINT "password_authentications_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
