@@ -30,6 +30,8 @@ Referenced by:
     TABLE "password_authentication_events" CONSTRAINT "password_authentication_events_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
     TABLE "password_authentications" CONSTRAINT "password_authentications_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     TABLE "response_histories" CONSTRAINT "response_histories_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+    TABLE "temporary_bans" CONSTRAINT "temporary_bans_mod_user_id_fkey" FOREIGN KEY (mod_user_id) REFERENCES users(id) ON DELETE SET NULL
+    TABLE "temporary_bans" CONSTRAINT "temporary_bans_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     TABLE "trust_comments" CONSTRAINT "trust_comments_author_id_fkey" FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE SET NULL
     TABLE "trust_comments" CONSTRAINT "trust_comments_target_id_fkey" FOREIGN KEY (target_id) REFERENCES users(id) ON DELETE CASCADE
     TABLE "trust_events" CONSTRAINT "trust_events_mod_user_id_fkey" FOREIGN KEY (mod_user_id) REFERENCES users(id) ON DELETE SET NULL
