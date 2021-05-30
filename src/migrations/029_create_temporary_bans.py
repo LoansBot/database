@@ -21,7 +21,6 @@ def up(conn, cursor):
         '''
         CREATE INDEX idx_temporary_bans_on_user_id
             ON temporary_bans(user_id)
-        )
         '''
     )
     print(cursor.query.decode('utf-8'))
