@@ -14,7 +14,6 @@ moderator log when a temporary ban expires.
  id           | integer                     |           | not null | nextval('temporary_bans_id_seq'::regclass) | plain    |              |
  user_id      | integer                     |           | not null |                                            | plain    |              |
  mod_user_id  | integer                     |           |          |                                            | plain    |              |
- modaction_id | text                        |           | not null |                                            | extended |              |
  subreddit    | text                        |           | not null |                                            | extended |              |
  created_at   | timestamp without time zone |           | not null | CURRENT_TIMESTAMP                          | plain    |              |
  ends_at      | timestamp without time zone |           | not null |                                            | plain    |              |
