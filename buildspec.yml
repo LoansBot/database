@@ -3,7 +3,6 @@ version: 0.2
 artifacts:
   files:
      - src/**/*
-     - oneoff/**/*
      - requirements.txt
      - scripts/**/*
      - appspec.yml
