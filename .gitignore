@@ -5,5 +5,3 @@ src/settings.ini
 tests/settings.ini
 .vscode
 src/migrations.json
-oneoff/export.10.21.2020.jsonlines.brotli
-oneoff/.env
